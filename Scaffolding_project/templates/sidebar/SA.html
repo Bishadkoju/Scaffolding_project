@@ -37,13 +37,10 @@
             </a>
             <ul class=" collapse list-unstyled" id="supplierSubmenu">
                 <li>
-                    <a href="#">Add</a>
+                    <a href="{% url 'supplier_add'  %}">Add</a>
                 </li>
                 <li>
-                    <a href="#">Edit</a>
-                </li>
-                <li>
-                    <a href="#">View All</a>
+                    <a href="{% url 'supplier_list'  %}">View All</a>
                 </li>
             </ul>
         </li>
@@ -57,13 +54,10 @@
             </a>
             <ul class=" collapse list-unstyled" id="projectSubmenu">
                 <li>
-                    <a href="#">Add</a>
+                    <a href="{% url 'project_add'%}">Add</a>
                 </li>
                 <li>
-                    <a href="#">Edit</a>
-                </li>
-                <li>
-                    <a href="#">View All</a>
+                    <a href="{% url 'project_list' %}">View All</a>
                 </li>
             </ul>
         </li>

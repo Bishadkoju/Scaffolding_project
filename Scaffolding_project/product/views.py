@@ -50,17 +50,30 @@ class ProductDetailView(generic.DetailView):
     model=ProductRegister
     context_object_name='product'
     template_name='product/product_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context= super().get_context_data(**kwargs)
+        context['action']='Detail'
+        context['title']='Product Detail'
+        return context
    
 class ProductDeleteView(SuccessMessageMixin,generic.DeleteView):
     model=ProductRegister
     context_object_name='product'
-    template_name='product/product_delete.html'
+    template_name='product/product_detail.html'
     success_message="Product Deleted Successfully"
     success_url=reverse_lazy('dashboard')
+
+    def get_context_data(self, **kwargs):
+        context= super().get_context_data(**kwargs)
+        context['action']='Delete'
+        context['title']='Delete Product'
+        return context
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super().delete(request, *args, **kwargs)
+
 
 
 

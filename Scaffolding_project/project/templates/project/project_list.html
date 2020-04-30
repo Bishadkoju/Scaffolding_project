@@ -1,7 +1,7 @@
 {% extends 'layout.html'%}
 
 {% block title %}
-<title>Product List</title>
+<title>Project List</title>
 {% endblock %}
 
 {% block content%}
@@ -25,21 +25,21 @@
                 <table class="table table-hover" style="text-align:center">
                     <thead class="thead-dark">
                         <tr>
-                            <th>Name</th>
-                            <th>Item Code</th>
-                            <th>SellingPrice</th>
+                            <th>Title</th>
+                            <th>ID</th>
+                            <th>Status</th>
                             <th colspan="3">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for product in filter.qs%}
+                        {% for project in filter.qs%}
                         <tr>
-                            <td>{{product}}</td>
-                            <td>{{product.productMaterialItemCode}}</td>
-                            <td>{{product.productBrandNewSellingRate}}</td>
-                            <td><a href="{{product.get_absolute_url}}"><button class="btn btn-primary">View</button></a></td>
-                            <td><a href="{{product.get_update_url}}"><button class="btn btn-warning">Edit</button></a></td>
-                            <td><a href="{{product.get_delete_url}}"><button class="btn btn-danger">Delete</button></a></td>
+                            <td>{{project}}</td>
+                            <td>{{project.projectId}}</td>
+                            <td>{{product.projectStatus}}</td>
+                            <td><a href="{{project.get_absolute_url}}"><button class="btn btn-primary">View</button></a></td>
+                            <td><a href="{{project.get_update_url}}"><button class="btn btn-warning">Edit</button></a></td>
+                            <td><a href="{{project.get_delete_url}}"><button class="btn btn-danger">Delete</button></a></td>
                         </tr>
                     </tbody>
 

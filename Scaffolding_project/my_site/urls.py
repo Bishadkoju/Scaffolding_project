@@ -7,4 +7,6 @@ urlpatterns=[
     path('dashboard/',views.dashboard,name='dashboard'),
     path('account/',include('account.urls')),
     path('',RedirectView.as_view(url='dashboard/')),
+    path('supplier/',include('supplier.urls')),
+    path('project/',include('project.urls')),
     ]

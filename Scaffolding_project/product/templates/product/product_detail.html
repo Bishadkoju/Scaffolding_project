@@ -1,6 +1,6 @@
 {%extends 'layout.html'%}
 {% block title%}
-<title>Product Details</title>
+<title>{{title}}</title>
 {% endblock %}
 
 {% block content%}
@@ -10,7 +10,7 @@
 
             <div class="card" style="margin:10px;width:500rem;">
                 <div class="card-body">
-                    <h4 class="card-title">{{product.productName}}</h4>
+                    <h4 class="card-title">{{title}}</h4>
                     <p class="card-text">
                         <table align="center">
                             <tr>
@@ -71,12 +71,26 @@
                             </tr>
                         </table>
                     </p>
+                    {% ifequal action 'Detail'%}
                     <a href="{{product.get_update_url}}">
                         <button class="btn btn-warning border rounded" type="button" style="margin: 5px;">Edit</button>
                     </a>
                     <a href="{{product.get_delete_url}}">
                         <button class="btn btn-danger border rounded" type="button" style="margin: 5px;">Delete</button>
                     </a>
+                    {% else %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <h3> Are you sure you want to delete ??</h3>
+                        <br />
+                        <button type="submit" class="btn btn-danger" />Confirm</button>
+                        <a href="{%url 'product_list'%}">
+                            <button class="btn btn-success " type="button">Cancel</button>
+                        </a>
+                    </form>
+
+
+                    {% endifequal%}
                 </div>
             </div>
             <div class="card" style="margin:10px;">

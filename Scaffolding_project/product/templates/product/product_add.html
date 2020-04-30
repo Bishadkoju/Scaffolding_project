@@ -9,30 +9,36 @@
 
 <div class="card" style="max-width: 50rem;">
     <div class="form-group text-center">
-        <form method="post" name="AddProduct">
+        <form method="post">
             {% csrf_token %}
             <div class="row my-row">
                 <div class="col my-col col-lg-6 col-md-8">
-                    <h3> Add Product</h3>
+                    <h3> {{title}}</h3>
                 </div>
             </div>
             <div class="row my-row">
-                <div class="col my-col  col-lg-11">
+                <div class="col my-col  col-lg-12">
                     <div class="input-group">
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-user"></i>
                         </div>
-                        {{form.productName}}
+                        <div class="floating-placeholder">
+                            {{form.productName}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row my-row">
-                <div class="col my-col col-lg-11">
+                <div class="col my-col  col-lg-12">
                     <div class="input-group">
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        {{form.productMaterialItemCode}}
+                        <div class="floating-placeholder">
+                            {{form.productMaterialItemCode}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -42,7 +48,10 @@
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-unlock"></i>
                         </div>
-                        {{form.productBrandNewSellingRate}}
+                        <div class="floating-placeholder">
+                            {{form.productBrandNewSellingRate}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
                 <div class="col my-col col-12 col-sm-12 col-lg-5">
@@ -50,7 +59,10 @@
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-unlock"></i>
                         </div>
-                        {{form.productSecondHandSellingRate}}
+                        <div class="floating-placeholder">
+                            {{form.productSecondHandSellingRate}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,7 +72,10 @@
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-unlock"></i>
                         </div>
-                        {{form.productLossRate}}
+                            <div class="floating-placeholder">
+                            {{form.productLossRate}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
                 <div class="col my-col col-12 col-sm-12 col-lg-5">
@@ -68,19 +83,25 @@
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-unlock"></i>
                         </div>
-                        {{form.productRepairRate}}
+                        <div class="floating-placeholder">
+                            {{form.productRepairRate}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row my-row">
-                <div class="col my-col col-sm-12 col-lg-11">
+                <div class="col my-col  col-lg-12">
 
                     <div class="input-group">
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-registered"></i>
                         </div>
-                        {{form.productCleaningRate}}
+                        <div class="floating-placeholder">
+                            {{form.productCleaningRate}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -90,7 +111,10 @@
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-unlock"></i>
                         </div>
-                        {{form.productDailyRentalRate}}
+                        <div class="floating-placeholder">
+                            {{form.productDailyRentalRate}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
                 <div class="col my-col col-12 col-sm-12 col-lg-5">
@@ -98,17 +122,23 @@
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-unlock"></i>
                         </div>
-                        {{form.productWeeklyRentalRate}}
+                        <div class="floating-placeholder">
+                            {{form.productWeeklyRentalRate}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row my-row">
-                <div class="col my-col col-sm-12 col-lg-11">
+                <div class="col my-col  col-lg-12">
                     <div class="input-group">
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-registered"></i>
                         </div>
-                        {{form.productMonthlyRentalRate}}
+                        <div class="floating-placeholder">
+                            {{form.productMonthlyRentalRate}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -118,7 +148,10 @@
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-unlock"></i>
                         </div>
-                        {{form.productDailyHireCharge}}
+                        <div class="floating-placeholder">
+                            {{form.productDailyHireCharge}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
                 <div class="col my-col col-12 col-sm-12 col-lg-5">
@@ -126,47 +159,62 @@
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-unlock"></i>
                         </div>
-                        {{form.productWeeklyHireCharge}}
+                        <div class="floating-placeholder">
+                            {{form.productWeeklyHireCharge}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row my-row">
-                <div class="col my-col col-sm-12 col-lg-11">
+                <div class="col my-col  col-lg-12">
                     <div class="input-group">
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-registered"></i>
                         </div>
-                        {{form.productMonthlyHireCharge}}
+                        <div class="floating-placeholder">
+                            {{form.productMonthlyHireCharge}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row my-row">
-                <div class="col my-col col-sm-12 col-lg-11">
+                <div class="col my-col  col-lg-12">
                     <div class="input-group">
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-user"></i>
                         </div>
-                        {{form.productRecordedBy}}
+                        <div class="floating-placeholder">
+                            {{form.productRecordedBy}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row my-row">
-                <div class="col my-col col-sm-12 col-lg-11">
+                <div class="col my-col  col-lg-12">
                     <div class="input-group">
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-user"></i>
                         </div>
-                        {{form.supplierName}}
+                        <div class="floating-placeholder">
+                            {{form.supplierName}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="row my-row">
-                <div class="col my-col col-sm-12 col-lg-11">
+                <div class="col my-col  col-lg-12">
                     <div class="input-group">
                         <div style="width:40px" class="input-group-prepend input-group-text">
                             <i class="fas fa-user"></i>
                         </div>
-                        {{form.remarks}}
+                        <div class="floating-placeholder">
+                            {{form.remarks}}
+                            <label></label>
+                        </div>
                     </div>
                 </div>
             </div>

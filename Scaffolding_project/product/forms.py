@@ -2,7 +2,7 @@ from .models import ProductRegister
 from django import forms
 
 class addProductForm(forms.ModelForm):
-    productName=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Product Name','class':'form-control',}),
+    productName=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Product Name','class':'form-control ',}),
                                 required=True,max_length=100)
     productMaterialItemCode=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Product Material Item Code','class':'form-control',}),
                                 required=True,max_length=100)

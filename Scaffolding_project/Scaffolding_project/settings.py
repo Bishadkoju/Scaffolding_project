@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'my_site.apps.MySiteConfig',
     'product.apps.ProductConfig',
     'account.apps.AccountConfig',
+    'supplier.apps.SupplierConfig',
+    'project.apps.ProjectConfig',
     'django_filters',
     'crispy_forms',
 ]

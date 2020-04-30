@@ -1,9 +1,6 @@
 ﻿{%if not user.is_authenticated  %}
 <h1><a href="{% url 'login' %}">Login</a></h1>
 {%else%}
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +24,7 @@
     <link href='https://fonts.googleapis.com/css?family=Yantramanav' rel='stylesheet'>
 
     <!-- Our Custom Java Script -->
-    <script type="text/javascript" src="{%static 'main.js'%}"></script>
+    
 
     <!-- Font Awesome JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -77,8 +74,49 @@
                 }, 3000);
             });
         });
+
+        function initTricks() {
+            var labels = $('.floating-placeholder label');
+            labels.each(function (i) {
+                var ph = $(labels[i])
+                    .siblings('input')
+                    .first()
+                    .attr('placeholder');
+                console.log(ph);
+                $(labels[i]).html(ph);
+            });
+        }
+
+        $(document).ready(function () {
+            $('.floating-placeholder input').keyup(function () {
+                var input = $(this).val();
+                if (input) $(this).parent().addClass('float');
+                else $(this).parent().removeClass('float');
+            });
+
+            $('#form').submit(function (e) {
+                e.preventDefault();
+            });
+
+            $('.floating-placeholder input').each(function (i) {
+                var input = $(this).val();
+                if (input) $(this).parent().addClass('float');
+                else $(this).parent().removeClass('float');
+            });
+
+            $("form").on("reset", function () {
+                console.log('reset');
+                $('.floating-placeholder input').each(function (i) {
+                    $(this).parent().removeClass('float');
+                });
+            });
+            initTricks();
+        })
+
+
     </script>
 </head>
+
 <body>
     <div class="wrapper">
         <!-- Sidebar  -->
