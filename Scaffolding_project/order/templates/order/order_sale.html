@@ -1,0 +1,83 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+<title>Confirm Order</title>
+{% endblock %}
+
+{% block content%}
+<div class="row">
+    <div class=" col col-12 col-lg-5">
+        <div class="card" style="margin:10px;width:100%;padding-top:15px;">
+            
+            <div class="card-body">
+                {% if cart%}
+                <h3>Are you sure you want to make the order ?</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <input type="submit" name="submit" class="btn btn-success" value="Confirm"/>
+                    <a href="{% url 'cart_view' mode %}"><input type="button" class="btn btn-primary" value="Cart" /></a>
+                    <a href="{% url 'dashboard' %}"><input type="button" class="btn btn-danger" value="Cancel" /></a>
+                </form>
+                
+                {%endif%}
+                
+            </div>
+        </div>
+    </div>
+    <div class=" col col-12 col-lg-7">
+        <div class="card" style="margin:10px;width:95%;padding-top:15px;">
+            <h3 class="card-title" style="text-align:center;">Cart</h3>
+            <div class="card-body">
+                {% if not cart %}
+                <H2>Your cart is empty </H2>
+                <a href="{% url 'cart_view' 'sale' %}"><button class="btn btn-primary">Cart</button></a>
+                {% else %}
+                <form method="POST">
+                    {%csrf_token%}
+                    <table class="table table-hover" style="text-align:center">
+                        <thead class="thead-dark">
+                            <tr>
+
+                                <th>Item Code</th>
+                                <th> Name</th>
+                                <th> Rate($)</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart %}
+                            {% with product=item.product %}
+                            <tr>
+
+                                <td>{{product.productMaterialItemCode}}</td>
+                                <td>{{product.productName}}</td>
+                                <td>{{item.price}}</td>
+                                <td>{{item.quantity}}</td>
+                                <td>{{item.total_price}}</td>
+                            </tr>
+
+                            {% endwith %}
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                    <hr />
+                    <h4>Grand Total =   ${{cart.get_total}}</h4>
+                    <br />
+        
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+        {% endblock %}

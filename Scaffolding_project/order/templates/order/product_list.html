@@ -1,0 +1,64 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+<title>Product List</title>
+{% endblock %}
+
+{% block content%}
+<div class="row">
+    <div class=" col col-12 col-lg-3">
+        <div class="card" style="margin:10px;width:18rem;padding-top:15px;">
+            <h3 class="card-title" style="text-align:center;">FILTER</h3>
+            <div class="card-body">
+                <form method="GET">
+                    {{filter.form.as_p}}
+                    <button class='btn btn-primary' type="submit">search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class=" col col-12 col-lg-9">
+        <div class="card" style="margin:10px;width:50rem;padding-top:15px;">
+            <h3 class="card-title" style="text-align:center;">Product List</h3>
+            <div class="card-body">
+                {% if filter.qs%}
+                <table class="table table-hover" style="text-align:center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Item Code</th>
+                            <th>SellingPrice</th>
+                            <th colspan="3">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in filter.qs%}
+                        <tr>
+                            <td>{{product}}</td>
+                            <td>{{product.productMaterialItemCode}}</td>
+                            <td>{{product.productBrandNewSellingRate}}</td>
+                            <td><a href="{{product.get_absolute_url}}"><button class="btn btn-primary">View</button></a></td>
+                            <td><a href="{{product.get_update_url}}"><button class="btn btn-warning">Edit</button></a></td>
+                            <td><a href="{{product.get_delete_url}}"><button class="btn btn-danger">Delete</button></a></td>
+                        </tr>
+                    </tbody>
+
+                    {% endfor%}
+                </table>
+                {% else %}
+                <H2>No product found </H2>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+   
+    
+
+
+
+
+        {% endblock %}

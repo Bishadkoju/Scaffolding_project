@@ -9,4 +9,6 @@ urlpatterns=[
     path('',RedirectView.as_view(url='dashboard/')),
     path('supplier/',include('supplier.urls')),
     path('project/',include('project.urls')),
+    path('cart/',include('cart.urls')),
+    path('order/',include('order.urls')),
     ]

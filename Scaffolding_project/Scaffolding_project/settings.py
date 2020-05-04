@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'supplier.apps.SupplierConfig',
     'project.apps.ProjectConfig',
+    'order.apps.OrderConfig',
+    'cart.apps.CartConfig',
     'django_filters',
     'crispy_forms',
 ]
@@ -120,6 +122,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    
 ]
+CART_SESSION_ID = 'cart'
 
