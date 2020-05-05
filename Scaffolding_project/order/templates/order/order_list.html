@@ -1,0 +1,65 @@
+{% extends 'layout.html'%}
+
+{% block title %}
+<title>Product List</title>
+{% endblock %}
+
+{% block content%}
+<div class="row">
+    <div class=" col col-12 col-lg-3">
+        <div class="card" style="margin:10px;width:18rem;padding-top:15px;">
+            <h3 class="card-title" style="text-align:center;">FILTER</h3>
+            <div class="card-body">
+                <form method="GET">
+                    {{filter.form.as_p}}
+                    <button class='btn btn-primary' type="submit">search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class=" col col-12 col-lg-9">
+        <div class="card" style="margin:10px;width:50rem;padding-top:15px;">
+            <h3 class="card-title" style="text-align:center;">Order List</h3>
+            <div class="card-body">
+                {% if filter.qs%}
+                <table class="table table-hover" style="text-align:center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Timestamp</th>
+                            
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in filter.qs%}
+                        <tr>
+                            <td>{{order.id}}</td>
+                            <td>{{order.user.username}}</td>
+                            <td>{{order.total_price}}</td>
+                            <td>{{order.status}}</td>
+                            <td>{{order.timestamp}}</td>
+                            <td><a href="{{order.get_absolute_url}}"><button class="btn btn-primary">View</button></a></td>
+                        </tr>
+                    </tbody>
+                    {% endfor%}
+                </table>
+                {% else %}
+                <H2>No order found </H2>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+        {% endblock %}

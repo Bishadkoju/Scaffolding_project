@@ -1,16 +1,6 @@
-{% extends 'layout.html'%}
-
-{% block title %}
-<title>Confirm Order</title>
-{% endblock %}
-
-{% block content%}
-<div class="row">
-    <div class=" col col-12 col-lg-5">
-        <div class="card" style="margin:10px;width:100%;padding-top:15px;">
-            
-            <div class="card-body">
-                {% if cart%}
+{%extends 'order/order_layout.html'%}
+{% block left %}
+ {% if cart%}
                 <h3>Are you sure you want to make the order ?</h3>
                 <form method="POST">
                     {% csrf_token %}
@@ -21,15 +11,12 @@
                 </form>
                 
                 {%endif%}
-                
-            </div>
-        </div>
-    </div>
-    <div class=" col col-12 col-lg-7">
-        <div class="card" style="margin:10px;width:95%;padding-top:15px;">
-            <h3 class="card-title" style="text-align:center;">Cart</h3>
-            <div class="card-body">
-                {% if not cart %}
+{% endblock %}
+
+{%block left-title%} Cart {%endblock%}
+
+{%block right%}
+{% if not cart %}
                 <H2>Your cart is empty </H2>
                 <a href="{% url 'cart_view' 'sale' %}"><button class="btn btn-primary">Cart</button></a>
                 {% else %}
@@ -68,16 +55,4 @@
                     <br />
         
                 {% endif %}
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-        {% endblock %}
+{%endblock%}
