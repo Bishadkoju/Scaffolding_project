@@ -97,7 +97,7 @@ a:focus {
     background: #7386D5;
     border: none;
     border-radius: 0;
-    margin-bottom: 40px;
+    
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
     color: rgb(255, 255, 255);
 }
@@ -373,10 +373,9 @@ button:hover {
 }
 
 
-body {
-    background: #eee;
-    font-family: arial;
-}
+
+
+
 
 
 
@@ -412,6 +411,14 @@ button {
         border-radius: .25rem;
         width:100%;
     }
+    .floating-placeholder select {
+        height: 40px;
+        padding: 12px 12px 2px 12px;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        width: 100%;
+    }
+   
 
     .floating-placeholder label {
         position: absolute;
@@ -430,6 +437,8 @@ button {
         bottom: 13px;
         opacity: 1;
     }
+
+
 
 
 

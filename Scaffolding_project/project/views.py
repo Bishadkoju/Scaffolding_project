@@ -23,6 +23,12 @@ class ProjectCreateView(SuccessMessageMixin,generic.CreateView):
         context['title']='Add Project'
         return context
 
+    def get_initial(self):
+        initial= super().get_initial()
+        initial['projectRecordedBy']=self.request.user
+        
+        return initial
+
 class ProjectUpdateView(SuccessMessageMixin,generic.UpdateView):
     model=ProjectRegister
     form_class=addProjectForm
@@ -34,6 +40,11 @@ class ProjectUpdateView(SuccessMessageMixin,generic.UpdateView):
         context['action']='Update'
         context['title']='Update Project'
         return context
+    def get_initial(self):
+        initial= super().get_initial()
+        initial['projectRecordedBy']=self.request.user
+        
+        return initial
 
 
 class ProjectListView(generic.ListView):
