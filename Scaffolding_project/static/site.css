@@ -16,7 +16,6 @@ body {
 
 img.avatar {
     width: 150px;
-    height: 150px;
     border-radius: 50%;
 }
 
@@ -368,32 +367,7 @@ a.article:hover {
     float: left;
 }
 
-button:hover {
-    opacity: 0.8;
-}
 
-
-
-
-
-
-
-
-button {
-    padding: 10px 20px;
-    margin: 0;
-    border-radius: 4px;
-    margin-top: 0px;
-    background: coral;
-    border: 0;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-    button:focus {
-        outline: 0;
-    }
 
 .floating-placeholder {
     position: relative;
@@ -413,7 +387,7 @@ button {
     }
     .floating-placeholder select {
         height: 40px;
-        padding: 12px 12px 2px 12px;
+        padding: 2px 12px 2px 12px;
         border: 1px solid #ced4da;
         border-radius: .25rem;
         width: 100%;

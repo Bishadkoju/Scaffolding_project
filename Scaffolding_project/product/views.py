@@ -14,7 +14,7 @@ class ProductCreate(SuccessMessageMixin,generic.CreateView):
     model=ProductRegister
     template_name='product/product_add.html'
     form_class=addProductForm
-    success_url=reverse_lazy('dashboard')
+    success_url=reverse_lazy('product_list')
     success_message="Product added Successully !!"
     
     def get_context_data(self, **kwargs):
@@ -22,6 +22,11 @@ class ProductCreate(SuccessMessageMixin,generic.CreateView):
         context['action']='Add'
         context['title']='Add Product'
         return context
+
+    def get_initial(self):
+        initial=super().get_initial()
+        initial['productRecordedBy']=self.request.user
+        return initial
 
 class ProductUpdateView(SuccessMessageMixin,generic.UpdateView):
     model=ProductRegister
@@ -62,7 +67,7 @@ class ProductDeleteView(SuccessMessageMixin,generic.DeleteView):
     context_object_name='product'
     template_name='product/product_detail.html'
     success_message="Product Deleted Successfully"
-    success_url=reverse_lazy('dashboard')
+    success_url=reverse_lazy('product_list')
 
     def get_context_data(self, **kwargs):
         context= super().get_context_data(**kwargs)

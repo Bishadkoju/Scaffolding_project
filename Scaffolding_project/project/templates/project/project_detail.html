@@ -1,87 +1,101 @@
-{%extends 'layout.html'%}
+{% extends 'detail_layout.html'%}
+
 {% block title%}
-<title>{{title}}</title>
-{% endblock %}
+    <title>{{title}}</title>
+{% endblock%}
 
-{% block content%}
-
-    <div class="container" style="margin: 10px;padding: 10px;">
-        <div class="card-group" >
-
-            <div class="card" style="margin:10px;width:500rem;">
-                <div class="card-body">
-                    <h4 class="card-title">{{title}}</h4>
-                    <p class="card-text">
-                        <table align="center">
-                            <tr>
-                                <td><b>Title:</b></td>
-                                <td>{{project.projectTitle}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>ID:</b></td>
-                                <td>{{project.projectId}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Contract Number:</b></td>
-                                <td>{{project.projectContractNo}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Site Location</b></td>
-                                <td>{{project.projectSiteLocation}}:</td>
-                            </tr>
-                            <tr>
-                                <td><b> Mail Location:</b></td>
-                                <td>{{project.projectMailLocation}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Order Number:</b></td>
-                                <td>{{project.orderNumber}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Project Status:</b></td>
-                                <td>{{project.projectStatus}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Recorded By:</b></td>
-                                <td>{{project.projectRecordedBy}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Tx Truck Rate:</b></td>
-                                <td>{{project.txTruckRates}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Remarks:</b></td>
-                                <td>{{project.remarks}}</td>
-                            </tr>
-                        </table>
-                    </p>
-                    {% ifequal action 'Detail'%}
-                    <a href="{{project.get_update_url}}">
-                        <button class="btn btn-warning border rounded" type="button" style="margin: 5px;">Edit</button>
+    {%block left-title%}{{title}}{%endblock%}
+    {% block left%}
+    <p class="card-text">
+                    <table style="border-style:solid; border-width:2px;" align="center">
+                        <tr>
+                            <td><b>Title:</b></td>
+                            <td>{{project.projectTitle}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>ID:</b></td>
+                            <td>{{project.projectId}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Contract Number:</b></td>
+                            <td>{{project.projectContractNo}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Site Location</b></td>
+                            <td>{{project.projectSiteLocation}}:</td>
+                        </tr>
+                        <tr>
+                            <td><b> Mail Location:</b></td>
+                            <td>{{project.projectMailLocation}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Order Number:</b></td>
+                            <td>{{project.orderNumber}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Project Status:</b></td>
+                            <td>{{project.projectStatus}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Recorded By:</b></td>
+                            <td>{{project.projectRecordedBy}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Tx Truck Rate:</b></td>
+                            <td>{{project.txTruckRates}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Remarks:</b></td>
+                            <td>{{project.remarks}}</td>
+                        </tr>
+                    </table>
+                </p>
+                {% ifequal action 'Detail'%}
+                <a href="{{project.get_update_url}}">
+                    <button class="btn btn-warning border rounded" type="button" style="margin: 5px;">Edit</button>
+                </a>
+                <a href="{{project.get_delete_url}}">
+                    <button class="btn btn-danger border rounded" type="button" style="margin: 5px;">Delete</button>
+                </a>
+                {% else %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <hr />
+                    <h3> Are you sure you want to delete ??</h3>
+                    <br />
+                    <button type="submit" class="btn btn-danger" />Confirm</button>
+                    <a href="{%url 'project_list'%}">
+                        <button class="btn btn-success " type="button">Cancel</button>
                     </a>
-                    <a href="{{project.get_delete_url}}">
-                        <button class="btn btn-danger border rounded" type="button" style="margin: 5px;">Delete</button>
-                    </a>
-                    {% else %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        <h3> Are you sure you want to delete ??</h3>
-                        <br />
-                        <button type="submit" class="btn btn-danger" />Confirm</button>
-                        <a href="{%url 'project_list'%}">
-                            <button class="btn btn-success " type="button">Cancel</button>
-                        </a>
-                    </form>
+                </form>
 
 
-                    {% endifequal%}
-                </div>
-            </div>
-            <div class="card" style="margin:10px;">
-                <img class="card-img-top w-100 d-block">
-            </div>
-        </div>
-    </div>
+                {% endifequal%}
+    {%endblock%}
 
 
-{% endblock %}
+    {%block right-title%}Image{%endblock%}
+    {%block right%}
+        Image to be added or any extra contents
+    {%endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

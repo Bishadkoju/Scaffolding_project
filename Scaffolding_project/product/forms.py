@@ -1,5 +1,6 @@
 from .models import ProductRegister
 from django import forms
+from django.contrib.auth.models import User
 
 class addProductForm(forms.ModelForm):
     productName=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Product Name',}),
@@ -30,10 +31,7 @@ class addProductForm(forms.ModelForm):
                                 required=True)
     stock=forms.DecimalField(widget=forms.NumberInput(attrs={'placeholder':'Amount of product in stock ',}),
                                 required=True,min_value=0)
-    productRecordedBy=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Product Recorded By',}),
-                                required=True,max_length=100)
-    supplierName=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Supplier Name',}),
-                                required=True,max_length=100)
+    productRecordedBy=forms.ModelChoiceField(queryset=User.objects.all(),required=True, widget=forms.HiddenInput())
     remarks=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Remarks',}),
                                 required=True,max_length=200)
     
@@ -56,6 +54,6 @@ class addProductForm(forms.ModelForm):
                 'productMonthlyHireCharge',
                 'stock',
                 'productRecordedBy',
-                'supplierName',
-                'remarks'
+                'remarks',
+                'image'
                ]

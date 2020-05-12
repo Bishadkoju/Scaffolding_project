@@ -26,7 +26,6 @@ class ProjectCreateView(SuccessMessageMixin,generic.CreateView):
     def get_initial(self):
         initial= super().get_initial()
         initial['projectRecordedBy']=self.request.user
-        
         return initial
 
 class ProjectUpdateView(SuccessMessageMixin,generic.UpdateView):

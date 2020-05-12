@@ -9,7 +9,7 @@
 
 <div class="card" style="max-width: 50rem;">
     <div class="form-group text-center">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row my-row">
                 <div class="col my-col col-lg-6 col-md-8">
@@ -192,32 +192,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row my-row">
-                <div class="col my-col  col-lg-12">
-                    <div class="input-group">
-                        <div style="width:40px" class="input-group-prepend input-group-text">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="floating-placeholder">
-                            {{form.productRecordedBy}}
-                            <label></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row my-row">
-                <div class="col my-col  col-lg-12">
-                    <div class="input-group">
-                        <div style="width:40px" class="input-group-prepend input-group-text">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="floating-placeholder">
-                            {{form.supplierName}}
-                            <label></label>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
+            {{form.productRecordedBy}}
             <div class="row my-row">
                 <div class="col my-col  col-lg-12">
                     <div class="input-group">
@@ -226,6 +202,19 @@
                         </div>
                         <div class="floating-placeholder">
                             {{form.remarks}}
+                            <label></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row my-row">
+                <div class="col my-col  col-lg-12">
+                    <div class="input-group">
+                        <div style="width:40px" class="input-group-prepend input-group-text">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="floating-placeholder">
+                            {{form.image}}
                             <label></label>
                         </div>
                     </div>

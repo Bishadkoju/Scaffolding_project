@@ -13,16 +13,21 @@
             <br />
         <input type="password" class="form-control" placeholder="Password" name="password">
     </div>
-      {% for message in messages %}
-      <span class="error">
-    {{message}}
-          </span>
-    {% endfor %}
+
       <br />
     <button class="btn btn-lg btn-primary btn-block text-uppercase"
             type="submit" value="Login">Log In</button>
+    <button class="btn btn-lg btn-primary btn-block "
+            type="button" value="PasswordChange"><a href="/account/password_reset">Forgot Password</a></button>
   </form>
-  <div class="reg">
+  <div style="padding:0px;" class="col col-12" >
+
+      {% for message in messages %}
+      <span style="width:inherit;" class="alert alert-danger">
+          {{message}}
+      </span>
+      {% endfor %}
+
+  </div>
   
-          </div>
 {% endblock %}
