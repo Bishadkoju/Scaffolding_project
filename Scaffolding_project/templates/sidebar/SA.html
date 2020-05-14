@@ -1,15 +1,14 @@
-<nav id="sidebar">
-    <div class="sidebar-header">
-        <h3>G-Cladd</h3>
-        <strong>GC</strong>
-    </div>
+
    <ul class="list-unstyled components">
+       <! Home !>
         <li >
             <a href="{% url 'dashboard'%}">
                 <i class="fas fa-home fa-2x"></i>
                 <span class="CTAs"> &ensp;Home</span>
             </a>
         </li>
+
+       <! Product !>
         <li>
             <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false">
                 <i class="fas fa-user-plus fa-2x"></i>
@@ -27,7 +26,7 @@
             </ul>
         </li>
 
-
+       <! Supplier !>
         <li>
             <a href="#supplierSubmenu" data-toggle="collapse" aria-expanded="false">
                 <i class="fas fa-user-plus fa-2x"></i>
@@ -45,6 +44,7 @@
             </ul>
         </li>
 
+       <! Project !>
         <li>
             <a href="#projectSubmenu" data-toggle="collapse" aria-expanded="false">
                 <i class="fas fa-user-plus fa-2x"></i>
@@ -62,6 +62,7 @@
             </ul>
         </li>
 
+       <! User !>
         <li>
             <a href="#userSubmenu" data-toggle="collapse" aria-expanded="false">
                 <i class="fas fa-user-plus fa-2x"></i>
@@ -74,7 +75,7 @@
                     <a href="{% url 'register'%}">Add</a>
                 </li>
                 <li>
-                    <a href="#">Edit</a>
+                    <a href="{% url 'update' %}">Update</a>
                 </li>
                 <li>
                     <a href="#">View All</a>
@@ -82,7 +83,7 @@
             </ul>
         </li>
 
-        
+        <! Order !>
         <li>
             <a href="#orderSubmenu" data-toggle="collapse" aria-expanded="false">
                 <i class="fas fa-list fa-2x"></i>
@@ -92,7 +93,7 @@
             </a>
             <ul class=" collapse list-unstyled" id="orderSubmenu">
                 <li>
-                    <a href="{% url 'cart_view' 'sale' %}">Add</a>
+                    <a href="{% url 'cart_view' 'Sale' %}">Add</a>
                 </li>
                 <li>
                     <a href="{% url 'order_list' %}">View All</a>
@@ -105,6 +106,8 @@
                 </li>
             </ul>
         </li>
+
+       <! Logout !>
         <li>
             <a href="{% url 'logout'%}">
                     <i class="fas fa-power-off fa-2x"></i>
@@ -112,4 +115,3 @@
                 </a>
         </li>
    </ul>
-</nav>

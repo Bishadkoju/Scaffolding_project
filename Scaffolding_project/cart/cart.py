@@ -4,18 +4,24 @@ from product.models import ProductRegister
 
 class Cart(object):
 
-    def __init__(self,request):
+    def __init__(self,request,mode):
+        
         self.session=request.session
         cart=self.session.get(settings.CART_SESSION_ID)
+        
         if not cart:
             cart=self.session[settings.CART_SESSION_ID]={}
+            mode=self.session[settings.CART_TYPE_SESSION_ID]=mode
+           
+        mode=self.session.get(settings.CART_TYPE_SESSION_ID)
+        self.mode=mode
         self.cart=cart
 
-    def add(self,product,quantity=1):
+    def add(self,product,price,quantity=1):
         product_id=str(product.id)
         if product_id not in self.cart:
             self.cart[product_id]={'quantity':0,
-                                   'price':str(product.productBrandNewSellingRate)
+                                   'price':str(price)
                                    }
         
         self.cart[product_id]['quantity']+=quantity
@@ -34,6 +40,7 @@ class Cart(object):
 
     def save(self):
         self.session[settings.CART_SESSION_ID]=self.cart
+        self.session[settings.CART_TYPE_SESSION_ID]=self.mode
         self.session.modified=True
 
     def cartItems(self):
@@ -56,6 +63,7 @@ class Cart(object):
     
     def clear(self):
         self.session[settings.CART_SESSION_ID]={}
+        self.session[settings.CART_TYPE_SESSION_ID]=''
         self.session.modified=True
 
     def get_total(self):

@@ -6,6 +6,11 @@ from django.http import HttpResponse
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import PasswordChangeForm
 from account.models import Profile,Company
+
+
+
+
+
 # Create your views here.
 def loginPage(request):
     if request.method=='POST':
@@ -17,7 +22,7 @@ def loginPage(request):
             messages.success(request,"Login successful ! Welcome")
             return redirect('dashboard')
         else:
-            messages.info(request,"Invalid username or password")
+            messages.error(request,"Invalid username or password")
             return redirect('login')
     else:
         return render(request,'account/loginPage.html')
@@ -28,7 +33,7 @@ def logout(request):
 
 def register(request):
     user_form=CreateUserForm()
-    profile_form=CreateProfileForm(initial={'recorded_by':request.user})
+    profile_form=CreateProfileForm()
 
 
     if request.method=='POST':
@@ -38,6 +43,7 @@ def register(request):
             user=user_form.save()
             profile=profile_form.save(commit=False)
             profile.user=user
+            profile.recorded_by=request.user
             profile.save()
 
             messages.success(request,"User Successfully created")

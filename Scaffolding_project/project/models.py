@@ -16,8 +16,9 @@ class ProjectRegister(models.Model):
     projectStatus=models.CharField(max_length=100,choices=STATUS_TYPES)
     projectRecordedBy=models.ForeignKey(User,on_delete=models.CASCADE)
     txTruckRates=models.IntegerField()
-    amount_paid =models.DecimalField(max_digits=10,decimal_places=2,default=0)
-    amount_to_be_paid =models.DecimalField(max_digits=10,decimal_places=2,default=0)
+    payment_total =models.DecimalField(max_digits=10,decimal_places=2,default=0)
+    payment_received =models.DecimalField(max_digits=10,decimal_places=2,default=0)
+    payment_due =models.DecimalField(max_digits=10,decimal_places=2,default=0)
     remarks=models.CharField(max_length=255)
 
     def __str__(self):

@@ -10,7 +10,7 @@ class CreateUserForm(UserCreationForm):
         attrs={'class':'form-control','placeholder':'Username'}),
                required=True,max_length=50)
     first_name=forms.CharField(widget=forms.TextInput(
-        attrs={'class':'form-control','placeholder':'First Name'}),
+        attrs={'class':'form-control','placeholder':'First Name','autofocus':'True'}),
                required=True,max_length=50)
     last_name=forms.CharField(widget=forms.TextInput(
         attrs={'class':'form-control','placeholder':'Last Name'}),
@@ -38,13 +38,31 @@ class CreateUserForm(UserCreationForm):
 
 
 class CreateProfileForm(forms.ModelForm):
-    user=forms.ModelChoiceField(queryset=User.objects.all(),required=False,widget=forms.HiddenInput())
+    
     company=forms.ModelChoiceField(queryset=Company.objects.all(),empty_label="Select Company")
-    recorded_by=forms.ModelChoiceField(queryset=User.objects.all(),required=False,widget=forms.HiddenInput())
+    account_type=forms.ChoiceField(choices=[('','Account Type')]+list(Profile.ACCOUNT_TYPE_CHOICES[1:]))
+    contact_number=forms.CharField(required=False)
+    
+    def clean_account_type(self):
+        account_type=self.cleaned_data['account_type']
+        company=self.cleaned_data['company']
+        
+        if (account_type in ['SA','SU','YM'] and company.type !='self'):
+            raise forms.ValidationError(" Client Company cant have selected user types")
+        if (account_type in ['CA','CU','PM'] and company.type =='self') :
+            raise forms.ValidationError(" Invalid Account type : Given Company is not client ")
+        if (account_type =='CA'):
+            try:
+                match=company.profile_set.get(account_type='CA')
+            except:
+                return self.cleaned_data['account_type']
+
+            raise forms.ValidationError('Client Admin already exists for the given company ')
+        return self.cleaned_data['account_type']
 
     class Meta:
         model=Profile
-        fields='__all__'
+        fields=['company','contact_number','account_type','profile_picture']
         #exclude=['user']
 
 class UpdateUserForm(forms.ModelForm):

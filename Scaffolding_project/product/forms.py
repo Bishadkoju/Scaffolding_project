@@ -33,7 +33,7 @@ class addProductForm(forms.ModelForm):
                                 required=True,min_value=0)
     productRecordedBy=forms.ModelChoiceField(queryset=User.objects.all(),required=True, widget=forms.HiddenInput())
     remarks=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Remarks',}),
-                                required=True,max_length=200)
+                                required=False,max_length=200)
     
     
     class Meta:

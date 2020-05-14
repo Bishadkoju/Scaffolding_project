@@ -99,7 +99,8 @@
             {% endfor %}
         </div>
         {% endif %}
-        {% if user_form.errors %}
+
+        {% if profile_form.errors %}
         <div class="col-10">
             {% for field in profile_form %}
             {% for error in field.errors %}

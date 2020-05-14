@@ -29,6 +29,7 @@
                             <th>User</th>
                             <th>Total Price</th>
                             <th>Status</th>
+                            <th>Type</th>
                             <th>Timestamp</th>
                             
                             <th></th>
@@ -41,6 +42,7 @@
                             <td>{{order.user.username}}</td>
                             <td>{{order.total_price}}</td>
                             <td>{{order.status}}</td>
+                            <td>{{order.type}}</td>
                             <td>{{order.timestamp}}</td>
                             <td><a href="{{order.get_absolute_url}}"><button class="btn btn-primary">View</button></a></td>
                         </tr>

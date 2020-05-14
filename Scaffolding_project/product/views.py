@@ -14,14 +14,8 @@ class ProductCreate(SuccessMessageMixin,generic.CreateView):
     model=ProductRegister
     template_name='product/product_add.html'
     form_class=addProductForm
-    success_url=reverse_lazy('product_list')
+    #success_url=reverse_lazy('product_list')
     success_message="Product added Successully !!"
-    
-    def get_context_data(self, **kwargs):
-        context= super().get_context_data(**kwargs)
-        context['action']='Add'
-        context['title']='Add Product'
-        return context
 
     def get_initial(self):
         initial=super().get_initial()
@@ -31,13 +25,9 @@ class ProductCreate(SuccessMessageMixin,generic.CreateView):
 class ProductUpdateView(SuccessMessageMixin,generic.UpdateView):
     model=ProductRegister
     form_class=addProductForm
-    template_name='product/product_add.html'
+    template_name='product/product_update.html'
     success_message="Product Updated Successfully"
-    def get_context_data(self,**kwargs):
-        context=super().get_context_data(**kwargs)
-        context['action']='Update'
-        context['title']='Update Product'
-        return context
+   
 
 
 class ProductListView(generic.ListView):
@@ -56,24 +46,16 @@ class ProductDetailView(generic.DetailView):
     context_object_name='product'
     template_name='product/product_detail.html'
 
-    def get_context_data(self, **kwargs):
-        context= super().get_context_data(**kwargs)
-        context['action']='Detail'
-        context['title']='Product Detail'
-        return context
+    
    
 class ProductDeleteView(SuccessMessageMixin,generic.DeleteView):
     model=ProductRegister
     context_object_name='product'
-    template_name='product/product_detail.html'
+    template_name='product/product_delete.html'
     success_message="Product Deleted Successfully"
     success_url=reverse_lazy('product_list')
 
-    def get_context_data(self, **kwargs):
-        context= super().get_context_data(**kwargs)
-        context['action']='Delete'
-        context['title']='Delete Product'
-        return context
+    
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)

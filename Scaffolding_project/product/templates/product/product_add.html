@@ -1,20 +1,19 @@
-{%extends 'layout.html' %}
+{%extends 'add_layout.html' %}
 
 {% block title %}
-<title>{{title}}</title>
+<title>Add Product</title>
 {% endblock %}
 
+{% block card-title%}
+Add Product
+{%endblock%}
+{% block card-body %}
 
-{% block content %}
 
-<div class="card" style="max-width: 50rem;">
-    <div class="form-group text-center">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row my-row">
-                <div class="col my-col col-lg-6 col-md-8">
-                    <h3> {{title}}</h3>
-                </div>
+                
             </div>
             <div class="row my-row">
                 <div class="col my-col  col-lg-12">
@@ -220,30 +219,14 @@
                     </div>
                 </div>
             </div>
-            <button class="btn btn-success border rounded" type="submit" style="margin: 5px;">{{action}}</button>
+            <br />
+            <button class="btn btn-success border rounded" type="submit" style="margin: 5px;">{%block action%}Add{%endblock%}</button>
             <button class="btn btn-warning border rounded" type="reset" style="margin: 5px;">Reset</button>
             <a href="{%url 'dashboard'%}">
                 <button class="btn btn-danger border rounded" type="button" style="margin: 5px;">Cancel</button>
             </a>
 
         </form>
-        {% if form.errors %}
-        <div class="col-6">
-            {% for field in form %}
-            {% for error in field.errors %}
-            <div class="alert alert-danger" id="myWish">
-                <strong>{{ error|escape }}</strong>
-            </div>
-            {% endfor %}
-            {% endfor %}
-            {% for error in form.non_field_errors %}
-            <div class="alert alert-danger" id="myWish">
-                <strong>{{ error|escape }}</strong>
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-    </div>
-
-</div>
+        
+  
 {% endblock %}

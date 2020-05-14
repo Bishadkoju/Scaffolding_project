@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import posixpath
 
+
+from django.contrib.messages import constants as message_constants
+
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -46,6 +51,7 @@ INSTALLED_APPS = [
     'cart.apps.CartConfig',
     'django_filters',
     'crispy_forms',
+    'bootstrap_datepicker'
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -59,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'Scaffolding_project.middleware.ViewControlMiddleware',
 ]
 
 ROOT_URLCONF = 'Scaffolding_project.urls'
@@ -76,6 +83,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Scaffolding_project.context_processor.send_context',
             ],
         },
     },
@@ -124,7 +132,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 CART_SESSION_ID = 'cart'
+CART_TYPE_SESSION_ID='cart_type'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+MESSAGE_TAGS = {message_constants.DEBUG: 'debug',
+                message_constants.INFO: 'info',
+                message_constants.SUCCESS: 'success',
+                message_constants.WARNING: 'warning',
+                message_constants.ERROR: 'danger',}
+
+LOGIN_NOT_REQUIRED_VIEWS=['login','password_reset','password_reset_done','password_reset_confirm']

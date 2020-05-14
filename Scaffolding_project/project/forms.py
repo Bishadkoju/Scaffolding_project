@@ -2,6 +2,7 @@ from django import forms
 from .models import ProjectRegister
 from account.models import Company
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 class addProjectForm(forms.ModelForm):
     #COMPANY_CHOICE=[('','Select Company')]+list([(company.pk,company.name) for company in Company.objects.all()])
@@ -9,7 +10,7 @@ class addProjectForm(forms.ModelForm):
     #COMPANY_CHOICE= PLACEHOLDER+COMPANY_LIST
     #COMPANY_CHOICE=tuple([(Company.objects.get(id=company.id),company.name) for company in Company.objects.all()])
     #company=forms.ChoiceField(widget=forms.Select(), choices=COMPANY_CHOICE)
-    company=forms.ModelChoiceField(queryset=Company.objects.all(),empty_label="Select Company")
+    company=forms.ModelChoiceField(queryset=Company.objects.filter(type='client'),empty_label="Select Company")
     projectTitle=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Project Title'}),
                                  required=True,max_length=100)
     projectId=forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Project ID'}),
@@ -42,4 +43,16 @@ class addProjectForm(forms.ModelForm):
         
     class Meta:
         model=ProjectRegister
-        fields='__all__'
+        #fields='__all__'
+        fields=['company',
+                'projectTitle',
+                'projectId',
+                'projectContractNo',
+                'projectSiteLocation',
+                'projectMailLocation',
+                'orderNumber',
+                'projectStatus',
+                'txTruckRates',
+                'remarks',
+                'projectRecordedBy'
+                ]

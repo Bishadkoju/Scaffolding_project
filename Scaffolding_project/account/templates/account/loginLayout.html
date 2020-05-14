@@ -32,12 +32,23 @@
                           <div class="card card-signin my-5">
                               <div class="card-body">
                                   <div class="login-text">Log In</div>
-                                 <div class="imgcontainer">
-                                     <img src="{%static 'avatar.png' %}" alt="avatar" class="avatar"/>
-                                 </div>
-                  
+                                  <div class="imgcontainer">
+                                      <img src="{%static 'avatar.png' %}" alt="avatar" class="avatar" />
+                                  </div>
+
                                   {% block content %}
                                   {% endblock %}
+                                  <br />
+                                  <div style="padding:0px;" class="col col-12">
+
+                                      {% for message in messages %}
+
+                                      <span style="width:inherit;" class="alert alert-{{message.tags}}">
+                                          {{message}}
+                                      </span>
+                                      {% endfor %}
+
+                                  </div>
                               </div>
                           </div>
                       </div>

@@ -1,11 +1,18 @@
 {%extends 'order/order_layout.html'%}
+
+{%block left-title%} {{mode}} Cart {%endblock%}
+
 {% block left %}
  {% if cart%}
                 <h3>Are you sure you want to make the order ?</h3>
                 <form method="POST">
                     {% csrf_token %}
                     
-                    <input type="submit" name="submit" class="btn btn-success" value="Confirm"/>
+                    {% ifequal mode 'Rent'%}
+                        {{rent_form}}<br />
+                    {%endifequal%}
+
+                    <input type="submit" name="submit" class="btn btn-success" value="Confirm" />
                     <a href="{% url 'cart_view' mode %}"><input type="button" class="btn btn-primary" value="Cart" /></a>
                     <a href="{% url 'dashboard' %}"><input type="button" class="btn btn-danger" value="Cancel" /></a>
                 </form>
@@ -13,7 +20,7 @@
                 {%endif%}
 {% endblock %}
 
-{%block left-title%} Cart {%endblock%}
+
 
 {%block right%}
 {% if not cart %}
