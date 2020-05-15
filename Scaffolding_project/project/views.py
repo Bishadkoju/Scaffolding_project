@@ -14,14 +14,9 @@ class ProjectCreateView(SuccessMessageMixin,generic.CreateView):
     model=ProjectRegister
     template_name='project/project_add.html'
     form_class=addProjectForm
-    success_url=reverse_lazy('dashboard')
     success_message="Project added Successully !!"
     
-    def get_context_data(self, **kwargs):
-        context= super().get_context_data(**kwargs)
-        context['action']='Add'
-        context['title']='Add Project'
-        return context
+    
 
     def get_initial(self):
         initial= super().get_initial()
@@ -31,14 +26,10 @@ class ProjectCreateView(SuccessMessageMixin,generic.CreateView):
 class ProjectUpdateView(SuccessMessageMixin,generic.UpdateView):
     model=ProjectRegister
     form_class=addProjectForm
-    template_name='project/project_add.html'
+    template_name='project/project_update.html'
     success_message="Project Updated Successfully"
-    success_url= reverse_lazy('dashboard')
-    def get_context_data(self,**kwargs):
-        context=super().get_context_data(**kwargs)
-        context['action']='Update'
-        context['title']='Update Project'
-        return context
+    
+    
     def get_initial(self):
         initial= super().get_initial()
         initial['projectRecordedBy']=self.request.user
@@ -63,24 +54,15 @@ class ProjectDetailView(generic.DetailView):
     context_object_name='project'
     template_name='project/project_detail.html'
 
-    def get_context_data(self, **kwargs):
-        context= super().get_context_data(**kwargs)
-        context['action']='Detail'
-        context['title']='Project Detail'
-        return context
-
+  
 class ProjectDeleteView(SuccessMessageMixin,generic.DeleteView):
     model=ProjectRegister
     context_object_name='project'
-    template_name='project/project_detail.html'
+    template_name='project/project_delete.html'
     success_message="Project Deleted Successfully"
     success_url=reverse_lazy('dashboard')
 
-    def get_context_data(self, **kwargs):
-        context= super().get_context_data(**kwargs)
-        context['action']='Delete'
-        context['title']='Delete Project'
-        return context
+   
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_message)

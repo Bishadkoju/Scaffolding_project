@@ -1,27 +1,22 @@
-{% extends 'layout.html'%}
+{%extends 'list_layout.html'%}
 
 {% block title %}
 <title>Supplier List</title>
 {% endblock %}
 
-{% block content%}
-<div class="row">
-    <div class=" col col-12 col-lg-3">
-        <div class="card" style="margin:10px;width:18rem;padding-top:15px;">
-            <h3 class="card-title" style="text-align:center;">FILTER</h3>
-            <div class="card-body">
-                <form method="GET">
+
+
+	{% block left-title %}FILTER{% endblock%}
+	{% block left%}
+         <form method="GET">
                     {{filter.form.as_p}}
                     <button class='btn btn-primary' type="submit">search</button>
                 </form>
-            </div>
-        </div>
-    </div>
-    <div class=" col col-12 col-lg-9">
-        <div class="card" style="margin:10px;width:50rem;padding-top:15px;">
-            <h3 class="card-title" style="text-align:center;">Supplier List</h3>
-            <div class="card-body">
-                {% if filter.qs%}
+	{%endblock %}
+
+	{%block right-title%}Supplier List{%endblock%}
+	{%block right%}
+        {% if filter.qs%}
                 <table class="table table-hover" style="text-align:center">
                     <thead class="thead-dark">
                         <tr>
@@ -32,7 +27,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                    {% for supplier in filter.qs %}
+                        {% for supplier in filter.qs %}
                         <tr>
                             <td>{{supplier.supplierName}}</td>
                             <td>{{supplier.supplierAddress}}</td>
@@ -49,9 +44,13 @@
                 <H2>No supplier found </H2>
                 {% endif %}
 
-            </div>
-        </div>
-    </div>
-</div>
+	{%endblock %}
 
-{% endblock %}
+
+
+
+
+
+
+
+

@@ -20,7 +20,7 @@ class addProjectForm(forms.ModelForm):
     projectSiteLocation=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Project Site Location'}),
                                  required=True,max_length=100)
     projectMailLocation=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Project Mail Location'}),
-                                 required=True,max_length=100)
+                                 required=False,max_length=100)
     orderNumber=forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Order Number'}),
                                  required=True)
     projectStatus=forms.ChoiceField(choices=[('','Project Status')]+list(ProjectRegister.STATUS_TYPES))
@@ -28,7 +28,7 @@ class addProjectForm(forms.ModelForm):
     txTruckRates=forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder':'Tx Truck Rates'}),
                                  required=True)
     remarks=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Remarks'}),
-                                 required=True,max_length=200)
+                                 required=False,max_length=200)
     projectRecordedBy=forms.ModelChoiceField(queryset=User.objects.all(),required=False,widget=forms.HiddenInput())
     def __init__(self,*args,**kwargs):
         super().__init__(*args,**kwargs)

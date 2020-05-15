@@ -13,14 +13,15 @@ class SupplierCreateView(SuccessMessageMixin,generic.CreateView):
     model=SupplierRegister
     form_class=addSupplierForm
     template_name='supplier/supplier_add.html'
-    success_url=reverse_lazy('dashboard')
+    
     success_message=" Supplier Added Successfully !!"
 
-    def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        context['action']='Add'
-        context['title']='Add Supplier'
-        return context
+    def get_initial(self):
+        initial= super().get_initial()
+        initial['recorded_by']=self.request.user
+        return initial
+
+    
 
 class SupplierListView(generic.ListView):
     model=SupplierRegister
@@ -36,39 +37,27 @@ class SupplierListView(generic.ListView):
 class SupplierUpdateView(SuccessMessageMixin,generic.UpdateView):
     model=SupplierRegister
     form_class=addSupplierForm
-    template_name='supplier/supplier_add.html'
+    template_name='supplier/supplier_update.html'
     success_message="Supplier Details Updated Successfully !!!"
-    success_url=reverse_lazy('dashboard')
+    
 
-    def get_context_data(self,**kwargs):
-        context=super().get_context_data(**kwargs)
-        context['action']='Update'
-        context['title']='Update Supplier'
-        return context
+    
 
 class SupplierDetailView(generic.DetailView):
     model=SupplierRegister
     template_name='supplier/supplier_detail.html'
     context_object_name='supplier'
 
-    def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        context['action']='Detail'
-        context['title']='Supplier Details'
-        return context
+    
 
 class SupplierDeleteView(SuccessMessageMixin,generic.DeleteView):
     model=SupplierRegister
-    template_name='supplier/supplier_detail.html'
+    template_name='supplier/supplier_delete.html'
     success_url=reverse_lazy('dashboard')
     success_message='Supplier Deleted Successfully !!!'
     context_object_name='supplier'
 
-    def get_context_data(self,**kwargs):
-        context=super().get_context_data(**kwargs)
-        context['action']='Delete'
-        context['title']='Delete Supplier'
-        return context
+    
     def delete(self, request, *args, **kwargs):
         messages.success(self.request,self.success_message)
         return super().delete(request, *args, **kwargs)

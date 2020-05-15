@@ -1,10 +1,10 @@
 {% extends 'detail_layout.html'%}
 
 {% block title%}
-    <title>{{title}}</title>
+    <title>Project Detail</title>
 {% endblock%}
 
-    {%block left-title%}{{title}}{%endblock%}
+    {%block left-title%}Project Detail{%endblock%}
     {% block left%}
     <p class="card-text">
                     <table style="border-style:solid; border-width:2px;" align="center">
@@ -50,27 +50,18 @@
                         </tr>
                     </table>
                 </p>
-                {% ifequal action 'Detail'%}
+                {%block form%}
                 <a href="{{project.get_update_url}}">
                     <button class="btn btn-warning border rounded" type="button" style="margin: 5px;">Edit</button>
                 </a>
                 <a href="{{project.get_delete_url}}">
                     <button class="btn btn-danger border rounded" type="button" style="margin: 5px;">Delete</button>
                 </a>
-                {% else %}
-                <form method="POST">
-                    {% csrf_token %}
-                    <hr />
-                    <h3> Are you sure you want to delete ??</h3>
-                    <br />
-                    <button type="submit" class="btn btn-danger" />Confirm</button>
-                    <a href="{%url 'project_list'%}">
-                        <button class="btn btn-success " type="button">Cancel</button>
-                    </a>
-                </form>
+                {%endblock%}
+              
+                
 
 
-                {% endifequal%}
     {%endblock%}
 
 

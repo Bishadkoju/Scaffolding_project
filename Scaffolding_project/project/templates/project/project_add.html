@@ -1,17 +1,14 @@
-{%extends 'layout.html' %}
+{% extends 'add_layout.html'%}
 
-{% block title %}
-<title>{{title}}</title>
-{% endblock %}
+{% block title%}
+<title>Add Project</title>
+{% endblock%}
 
-
-{% block content %}
-
+{%block card-title%} Add Project{%endblock%}
 
 
-<div class="card" style="max-width: 50rem;">
-    <div class="form-group text-center">
-        <form method="post">
+{% block card-body%}
+    <form method="post">
             {% csrf_token %}
             {{form.projectRecordedBy}}
             <div class="row my-row">
@@ -153,7 +150,7 @@
                 </div>
             </div>
 
-            <button class="btn btn-success border rounded" type="submit" style="margin: 5px;">{{action}}</button>
+            <button class="btn btn-success border rounded" type="submit" style="margin: 5px;">{%block action%}Add{%endblock%}</button>
             <button class="btn btn-warning border rounded" type="reset" style="margin: 5px;">Reset</button>
             <a href="{%url 'dashboard'%}">
                 <button class="btn btn-danger border rounded" type="button" style="margin: 5px;">Cancel</button>
@@ -161,26 +158,19 @@
 
         </form>
 
-        {% if form.errors %}
+{%endblock%}
 
-        {% for field in form %}
-        {% for error in field.errors %}
-        <div class="alert alert-danger" id="myWish">
-            <strong>{{ error|escape }}</strong>
-        </div>
-        {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-        <div class="alert alert-danger" id="myWish">
-            <strong>{{ error|escape }}</strong>
-        </div>
-        {% endfor %}
 
-        {% endif %}
-    </div>
 
-</div>
-{% endblock %}
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-{% extends 'detail_layout.html'%}
+{% extends 'add_layout.html'%}
 
 {% block title%}
     <title></title>
@@ -7,7 +7,7 @@
 {%block card-title%}{%endblock%}
 
 
-{% block card%}
+{% block card-body%}
 
 {%endblock%}
 
