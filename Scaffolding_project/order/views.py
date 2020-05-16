@@ -15,7 +15,10 @@ from .forms import *
 def quotation_confirm(request,mode):
     cart=Cart(request,mode)
     context={'cart':cart,'mode':mode}
-    print(context['mode'])
+    
+    if mode != cart.mode:
+        return redirect('order_confirm_quotation',cart.mode)
+
     if mode =='Rent':
         rent_form=RentConfirmForm()
         context['rent_form']=rent_form
@@ -31,20 +34,18 @@ def quotation_confirm(request,mode):
             total_price +=items['total_price']
 
         order_summary=OrderRegister(total_price=total_price,
-                                    payment_total=total_price,
                                     user=request.user,
                                     type=mode)
         order_summary.save()
 
         if mode=='Rent':
             order_summary.total_price=total_price*duration
+           #order_summary.payment_total=total_price*duration
             order_summary.save()
             rent_detail=rent_form.save(commit=False)
             rent_detail.order_register=order_summary
             rent_detail.save()
 
-
-        
         for items in cart:
             order_item=OrderItemsRegister(order_register=order_summary,
                                           product=items['product'],
@@ -65,6 +66,15 @@ class OrderListView(generic.ListView):
     context_object_name='order_list'
     template_name='order/order_list.html'
 
+    def get_queryset(self):
+        queryset=super().get_queryset()
+        
+        if self.request.user.profile.company.type=='client':
+           
+           return queryset.filter(user__exact = self.request.user)
+        else:
+            return queryset
+        
 
     def get_context_data(self, **kwargs):
         context =super().get_context_data(**kwargs)
@@ -86,9 +96,9 @@ def approveQuotationView(request,pk):
         if form.is_valid():
             order.payment_advance=form.cleaned_data['payment_advance']
             order.discount_rate=form.cleaned_data['discount_rate']
-            order.discount_amount=order.discount_rate*order.total_price/100
-            order.payment_total=order.total_price-order.discount_amount
-            order.status='QUOTATION APPROVED'
+            #order.discount_amount=order.discount_rate*order.total_price/100
+            #order.payment_total=order.total_price-order.discount_amount
+            order.status='APPROVED'
             order.save()
             messages.success(request,"Quotation Approved")
             return redirect('order_detail',pk=order.pk)
@@ -107,14 +117,15 @@ def confirmOrderView(request,pk):
             if form.is_valid():
                 order.project=get_object_or_404(ProjectRegister,pk=form.cleaned_data['project'].id)
                 
-                order.status='ORDER CONFIRMED'
-                order.payment_due=order.payment_total-order.payment_received
+                order.status='CONFIRMED'
+                #order.payment_due=order.payment_total-order.payment_received
                 order.save()
 
-                order.project.payment_total=order.payment_total
-                order.project.payment_due=order.payment_due
-                order.project.payment_received=order.payment_received
-                order.project.save()
+                #order.project.payment_total+=order.payment_total
+                #order.project.payment_due+=order.payment_due
+                #order.project.payment_received+=order.payment_received
+                
+                #order.project.save()
 
                 messages.success(request,' Order Confirmed ')
                 return redirect('order_detail',pk=order.pk)
@@ -133,11 +144,26 @@ def confirmPaymentView(request,pk):
     if request.method=='POST':
         form=PaymentConfirmForm(request.POST)
         if form.is_valid():
+            if order.payment_due<form.cleaned_data['payment_received']:
+                messages.error(request,'Payment amount greater than due amount')
+                return redirect('order_payment_confirm',pk=order.pk)
             order.payment_received+=form.cleaned_data['payment_received']
-            order.payment_due=order.payment_total-order.payment_received
-            order.status=' ORDER PACKING '
+            #order.payment_due=order.payment_total-order.payment_received
+
+
+            message_added=False
+            if order.payment_received>=order.payment_advance and order.payment_received<order.payment_total and order.status !='PACKING':
+                message_added=True
+                order.status='PACKING'
+                messages.success(request,'Adequate amount paid . Order forwarded to yard')
+            elif order.payment_received>=order.payment_total:
+                message_added=True
+                order.status='CLOSED'
+                messages.success(request,'Due amount cleared . Order Closed ')
+
             order.save()
-            messages.success(request,'Payment Confirmed. Your order is now Packing')
+            if not message_added:
+                messages.success(request,'Payment recorded successfully ')
             return redirect('order_detail',pk=order.pk)
     context={'order':order,'form':form}
     return render (request,'order/order_payment_confirm.html',context)
@@ -154,9 +180,13 @@ def addDnCnView(request,pk,type):
             raise Http404('Collection Note cannot be added ')
         title='Collection Note'
 
+    # Ensure that only one Delivery note and one collection note 
+    # is associted with each order
     DnCn=order.dncnregister_set.filter(type=type)
     if DnCn.count()>0:
         raise Http404(f'{title} already added')
+
+
     context={'order':order,'title':title}
 
     
@@ -164,15 +194,32 @@ def addDnCnView(request,pk,type):
         form=DnCnForm(request.POST)
         if form.is_valid() :
             print(order.type)
+
             if order.type == 'Rent':
                 rent_detail=RentalDetails.objects.get(id=order.rentaldetails.id)
-                if type == 'DN':       
-                    rent_detail.ordered_date=request.POST['date']
-                    rent_detail.save()
-                else:
-                    rent_detail.returned_date=request.POST['date']
-                    rent_detail.save()
+                rent_detail.ordered_date=request.POST['date']
+                rent_detail.save()
+                
+                #if type == 'DN':       
+                #    rent_detail.ordered_date=request.POST['date']
+                #    rent_detail.save()
+                #else:
+                #    rent_detail.returned_date=request.POST['date']
+                #    rent_detail.save()
                     
+    
+            # Change the stock amount for each product
+            for item in order.orderitemsregister_set.all():
+                if type=='DN':
+                    if item.product.stock<item.quantity:
+                        return HttpResponseBadRequest(f'Error : Amount of {item.product.productName} is not sufficient')
+                    item.product.stock-=item.quantity
+                else:
+                    item.product.stock+=item.quantity
+
+
+
+                item.product.save()
 
             info=form.save(commit=False)
             info.order_register=order
@@ -180,9 +227,9 @@ def addDnCnView(request,pk,type):
             info.recorded_by=request.user
 
             if order.type=='Rent' and type=='CN':
-                order.status='ORDER RETURNED'
+                order.status='RETURNED'
             else :
-                order.status='ORDER SHIPPED'
+                order.status='SHIPPED'
 
 
             info.save()

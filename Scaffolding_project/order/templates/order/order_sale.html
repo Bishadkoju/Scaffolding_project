@@ -7,6 +7,8 @@
                 <h3>Are you sure you want to make the order ?</h3>
                 <form method="POST">
                     {% csrf_token %}
+                    {{form}}
+                    <br />
                     
                     {% ifequal mode 'Rent'%}
                         {{rent_form}}<br />

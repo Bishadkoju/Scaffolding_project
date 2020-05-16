@@ -3,6 +3,10 @@
 
 {% block left %}
 <table>
+     <tr>
+        <td>Project</td>
+        <td>{{order.project}}</td>
+    </tr>
     <tr>
         <td>Order ID</td>
         <td>{{order.id}}</td>
@@ -60,16 +64,44 @@
 <hr />
 <br />
 {%block form%}
+<a href="{% url 'order_approve_quotation' order.id %}">
+    <button class="btn btn-primary">Approve Quotation</button>
+</a>
+<br />
+
+<a href="{% url 'order_confirm' order.id  %}">
+    <button class="btn btn-primary">Confirm Order</button>
+</a>
+<br />
+<a href="{% url 'order_payment_confirm' order.id  %}">
+    <button class="btn btn-primary">Confirm Payment</button>
+</a>
+<br />
+<a href="{% url 'add_dn_cn' order.id 'DN' %}">
+    <button class="btn btn-primary">Add Delivery note</button>
+</a>
+<br />
+<a href="{% url 'add_dn_cn' order.id 'CN' %}">
+    <button class="btn btn-primary">Add Collection note</button>
+</a>
+<br />
+{%endblock%}
+<hr />
+<br />
     {% if order.dncnregister_set %}
         {% for dncnregister in order.dncnregister_set.all %}
 <table class="table table-hover">
     <thead class="thead-dark">
-    <th colspan="2"><center>{{dncnregister.type}}</center></th>
+    <th colspan="2">
+        <center>
+            {% ifequal dncnregister.type 'DN'%}
+                Delivery Note
+            {%else%}
+                Collection Note
+            {%endifequal%}
+        </center></th>
     </thead>
-    <tr>
-        <td>Type :</td>
-        <td>{{dncnregister.type}}</td>
-    </tr>
+    
     <tr>
         <td>Truck Type</td>
         <td>{{dncnregister.truck_type}}</td>
@@ -90,7 +122,7 @@
         {%endfor%}
 
     {%endif%}
-{%endblock%}
+
 
 {% endblock %}
 
@@ -123,10 +155,10 @@
 <hr />
 {% ifequal order.type 'Rent' %}
 
-    <h5>Expected Rental Duration :{{order.rentaldetails.expected_duration}} day/s</h5>
+<h5>Expected Rental Duration :{{order.rentaldetails.expected_duration}} day/s</h5>
 
     {%endifequal%}
-<h5>Total Amount : {{order.total_price}} </h5>
+<h5>Total Amount : ${{order.total_price}} </h5>
 <h5>Discount Amount : ${{order.discount_amount}}</h5>
 
 <h4>Grand Total =   ${{order.payment_total}}</h4>

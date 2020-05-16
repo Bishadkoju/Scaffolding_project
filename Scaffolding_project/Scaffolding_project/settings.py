@@ -65,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'Scaffolding_project.middleware.ViewControlMiddleware',
+    'Scaffolding_project.middleware.LoginControlMiddleware',
 ]
 
 ROOT_URLCONF = 'Scaffolding_project.urls'

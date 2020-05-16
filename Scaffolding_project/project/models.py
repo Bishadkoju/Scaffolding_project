@@ -21,6 +21,10 @@ class ProjectRegister(models.Model):
     payment_due =models.DecimalField(max_digits=10,decimal_places=2,default=0)
     remarks=models.CharField(max_length=255)
 
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.payment_due=self.payment_total-self.payment_received
+        return super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
+
     def __str__(self):
         return self.projectTitle
     def get_absolute_url(self):

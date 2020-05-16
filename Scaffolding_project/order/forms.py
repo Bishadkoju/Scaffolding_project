@@ -29,7 +29,7 @@ class DnCnForm(forms.ModelForm):
     truck_plate_num=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Truck plate Number',}),
                                 required=True)
     remarks=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Remarks',}),
-                                required=True)
+                                required=False)
 
 
     class Meta:

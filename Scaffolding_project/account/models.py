@@ -17,6 +17,10 @@ class Company(models.Model):
     contact_number=models.CharField(max_length = 15)
     website=models.URLField(blank=True)
     remarks=models.CharField(max_length=255)
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        self.payment_due=self.payment_total-self.payment_received
+        return super().save(force_insert=force_insert, force_update=force_update, using=using, update_fields=update_fields)
     
     def __str__(self):
         return self.name

@@ -61,6 +61,10 @@ def cartView(request,mode):
             return redirect('cart_view',mode=mode)
 
         if request.POST['submit']=='checkout':
+            product_ids=cart.cart.keys()
+            for product_id in product_ids:
+                update_value=int(request.POST[product_id])
+                cart.update(product_id=product_id,update_value=update_value)
             return redirect('order_confirm_quotation',mode=mode)
     
     context['product_list']=product_list

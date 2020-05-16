@@ -5,9 +5,17 @@
 {% endblock %}
 
 {% block content%}
-<a href="{% url 'cart_view' 'Sale'%}"><button class="btn btn-primary">Sale</button></a>
-<a href="{% url 'cart_view' 'Rent'%}"><button class="btn btn-primary">Rent</button></a>
-<a href="{% url 'cart_view' 'Purchase'%}"><button class="btn btn-primary">Purchase</button></a>
+<a href="{% url 'cart_view' 'Sale'%}">
+    <button class="btn {% ifequal mode 'Sale'%}btn-success{%else%} btn-primary {%endifequal%}" >Sale</button>
+</a>
+<a href="{% url 'cart_view' 'Rent'%}">
+    <button class="btn {% ifequal mode 'Rent'%}btn-success{%else%} btn-primary {%endifequal%}">Rent</button>
+</a>
+{%ifequal user.profile.company.type 'self'%}
+<a href="{% url 'cart_view' 'Purchase'%}">
+    <button class="btn {% ifequal mode 'Purchase'%}btn-success{%else%} btn-primary {%endifequal%}">Purchase</button>
+</a>
+{%endifequal%}
 <div class="row">
     <div class=" col col-12 col-lg-5">
         <div class="card" style="margin:10px;width:100%;padding-top:15px;">
@@ -96,9 +104,4 @@
 
 
 
-
-
-
-
-
-        {% endblock %}
+{% endblock %}

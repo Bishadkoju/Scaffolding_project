@@ -6,6 +6,7 @@ from .models import ProjectRegister
 from .forms import addProjectForm
 from .filters import ProjectFilter
 from django.contrib import messages
+from account.models import Company
 
 
 # Create your views here.
@@ -42,6 +43,19 @@ class ProjectListView(generic.ListView):
     paginate_by=10
     context_object_name='project_list'
     template_name='project/project_list.html'
+
+    
+    
+
+    def get_queryset(self):
+        queryset=super().get_queryset()
+        
+        if self.request.user.profile.company.type =='client':
+            company=self.request.user.profile.company
+            return queryset.filter(company__exact=company)
+        return queryset
+        
+   
 
     def get_context_data(self, **kwargs):
         context =super().get_context_data(**kwargs)

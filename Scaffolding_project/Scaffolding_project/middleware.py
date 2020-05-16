@@ -3,7 +3,7 @@ from django.conf import settings
 from django.shortcuts import redirect
 from django.urls import resolve
 from django.contrib import messages
-class ViewControlMiddleware:
+class LoginControlMiddleware:
     def __init__(self,get_response):
         self.get_response=get_response
         
