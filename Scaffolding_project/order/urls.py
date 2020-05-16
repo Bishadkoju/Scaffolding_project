@@ -8,5 +8,6 @@ urlpatterns=[
              path('<int:pk>/confirmOrder/',confirmOrderView,name='order_confirm'),
              path('<int:pk>/confirmPayment/',confirmPaymentView,name='order_payment_confirm'),
              path('<int:pk>/add<str:type>/',addDnCnView,name='add_dn_cn'),
+             path('Puchase/',purchase_confirm,name='confirm_purchase'),
              path('<str:mode>/',quotation_confirm,name='order_confirm_quotation'),
              ]

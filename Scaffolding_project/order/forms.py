@@ -9,6 +9,8 @@ class ApproveQuotationForm(forms.ModelForm):
         fields=['discount_rate',
                 'payment_advance']
 
+
+
 class ConfirmOrderForm(forms.ModelForm):
     project=forms.ModelChoiceField(queryset=ProjectRegister.objects.all(),empty_label='Select Project')
     class Meta:

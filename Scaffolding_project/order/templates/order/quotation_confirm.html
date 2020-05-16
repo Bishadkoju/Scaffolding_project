@@ -3,11 +3,11 @@
 {%block left-title%} {{mode}} Cart {%endblock%}
 
 {% block left %}
+{%block form%}
  {% if cart%}
                 <h3>Are you sure you want to make the order ?</h3>
                 <form method="POST">
                     {% csrf_token %}
-                    {{form}}
                     <br />
                     
                     {% ifequal mode 'Rent'%}
@@ -19,7 +19,8 @@
                     <a href="{% url 'dashboard' %}"><input type="button" class="btn btn-danger" value="Cancel" /></a>
                 </form>
                 
-                {%endif%}
+   {%endif%}
+{%endblock%}
 {% endblock %}
 
 

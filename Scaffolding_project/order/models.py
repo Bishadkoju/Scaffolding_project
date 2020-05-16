@@ -13,8 +13,9 @@ class OrderRegister(models.Model):
                    ('CONFIRMED','CONFIRMED'),
                    ('PACKING','PACKING'),
                    ('SHIPPED','SHIPPED'),
-                   ('RETURNED','RETURNED')
-                   ,('CLOSED','CLOSED'))
+                   ('RECEIVED','RECEIVED')
+                   ,('CLOSED','CLOSED'),
+                   ('PURCHASED','PURCHASED'),)
 
     user=models.ForeignKey(User,on_delete=models.CASCADE)
     project=models.ForeignKey(ProjectRegister,on_delete=models.CASCADE,null=True)

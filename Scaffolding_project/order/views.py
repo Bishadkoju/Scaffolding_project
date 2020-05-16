@@ -1,6 +1,7 @@
 from decimal import Decimal
 from .filters import OrderFilter
 from project.models import ProjectRegister
+from account.models import Company
 
 from cart.cart import Cart
 from django.shortcuts import render,get_object_or_404,redirect
@@ -15,7 +16,8 @@ from .forms import *
 def quotation_confirm(request,mode):
     cart=Cart(request,mode)
     context={'cart':cart,'mode':mode}
-    
+    if mode=='Purchase':
+        return redirect('confirm_purchase')
     if mode != cart.mode:
         return redirect('order_confirm_quotation',cart.mode)
 
@@ -57,7 +59,60 @@ def quotation_confirm(request,mode):
         messages.success(request,'Order Registered successfully ')
         return redirect('order_detail',pk=order_summary.pk)
 
-    return render(request,'order/order_sale.html',context)
+    return render(request,'order/quotation_confirm.html',context)
+
+
+def purchase_confirm(request):
+    
+    mode='Purchase'
+    cart=Cart(request,mode)
+    context={'cart':cart,'mode':mode}
+    
+    if request.POST :
+
+        form=ApproveQuotationForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data['discount_rate'])
+            total_price=0
+            for items in cart:
+                total_price +=items['total_price']
+
+            company=Company.objects.get(type='self')
+
+            project=company.projectregister_set.get(company=company)
+            order_summary=OrderRegister(total_price=total_price,
+                                        user=request.user,
+                                        discount_rate=form.cleaned_data['discount_rate'],
+                                        payment_advance=form.cleaned_data['payment_advance'],
+                                        project=project,
+                                        type=mode,
+                                        status='PURCHASED')
+            order_summary.save()
+            
+            project.payment_total+=order_summary.payment_total
+            project.company.payment_total+=order_summary.payment_total
+            project.save()
+            project.company.save()
+            for items in cart:
+                order_item=OrderItemsRegister(order_register=order_summary,
+                                              product=items['product'],
+                                              product_price=items['price'],
+                                              quantity=items['quantity'],
+                                              sub_total=items['price']*items['quantity'])
+                order_item.save() 
+            cart.clear()
+            messages.success(request,'Purchase Registered successfully ')
+
+            return redirect('order_detail',pk=order_summary.pk)
+    else:
+        form=ApproveQuotationForm()
+
+    context['form']=form
+    return render(request,'order/purchase_confirm.html',context)
+
+
+
+
 
 
 class OrderListView(generic.ListView):
@@ -152,7 +207,7 @@ def confirmPaymentView(request,pk):
 
 
             message_added=False
-            if order.payment_received>=order.payment_advance and order.payment_received<order.payment_total and order.status !='PACKING':
+            if order.payment_received>=order.payment_advance and order.payment_received<order.payment_total and (order.status !='PACKING' and order.status !='PURCHASED'):
                 message_added=True
                 order.status='PACKING'
                 messages.success(request,'Adequate amount paid . Order forwarded to yard')
@@ -174,9 +229,11 @@ def addDnCnView(request,pk,type):
     if type not in ('DN','CN'):
         raise Http404
     if type =='DN':
+        if order.type=='Purchase':
+            raise Http404('Delivery Note cannot be added')
         title='Delivery Note'
     else:
-        if order.type !='Rent':
+        if order.type =='Sale':
             raise Http404('Collection Note cannot be added ')
         title='Collection Note'
 
@@ -226,8 +283,8 @@ def addDnCnView(request,pk,type):
             info.type=type
             info.recorded_by=request.user
 
-            if order.type=='Rent' and type=='CN':
-                order.status='RETURNED'
+            if order.type!='Sale' and type=='CN':
+                order.status='RECEIVED'
             else :
                 order.status='SHIPPED'
 
