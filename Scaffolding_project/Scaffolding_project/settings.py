@@ -66,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'Scaffolding_project.middleware.LoginControlMiddleware',
+    'Scaffolding_project.middleware.AccessControlMiddleware',
 ]
 
 ROOT_URLCONF = 'Scaffolding_project.urls'

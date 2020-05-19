@@ -176,7 +176,7 @@ class OrderDetailView(generic.DetailView):
                 links['Add Collection Note ']=reverse('add_dn_cn',args=[order.pk,'CN'])
         
         if self.request.user.profile.account_type in ['PM']:
-            if order.status=='SHIPPED':
+            if order.status=='SHIPPED' and order.type!='Sale':
                 links['Add Collection Note ']=reverse('add_dn_cn',args=[order.pk,'CN'])
         
 

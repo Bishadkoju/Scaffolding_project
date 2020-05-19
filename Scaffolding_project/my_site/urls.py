@@ -3,12 +3,12 @@ from .views import *
 from django.views.generic import RedirectView
 
 urlpatterns=[
+    #path('',RedirectView.as_view(url='dashboard/')),
+    path('',dashboard,name='dashboard'),
     path('product/',include('product.urls')),
-    path('dashboard/',dashboard,name='dashboard'),
-    path('account/',include('account.urls')),
-    path('',RedirectView.as_view(url='dashboard/')),
     path('supplier/',include('supplier.urls')),
     path('project/',include('project.urls')),
+    path('account/',include('account.urls')),
     path('cart/',include('cart.urls')),
     path('order/',include('order.urls')),
     path('company/add',CompanyCreateView.as_view(),name='company_add'),
