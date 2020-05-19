@@ -1,8 +1,8 @@
 from decimal import Decimal
 from .filters import OrderFilter
 from project.models import ProjectRegister
-from account.models import Company
-
+from account.models import Company,Profile
+from django.urls import reverse
 from cart.cart import Cart
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http.response import Http404,HttpResponseBadRequest
@@ -125,10 +125,21 @@ class OrderListView(generic.ListView):
         queryset=super().get_queryset()
         
         if self.request.user.profile.company.type=='client':
-           
-           return queryset.filter(user__exact = self.request.user)
+            profiles=Profile.objects.filter(company=self.request.user.profile.company)
+            users=User.objects.none()
+            for profile in profiles:
+                users |=User.objects.filter(pk=profile.user.pk)
+            print(users)
+            queryset=queryset.filter(user__in= users)
+            if(self.request.user.profile.account_type=='PM'):
+               return queryset.filter(status='SHIPPED')
+            else:
+                return queryset
         else:
-            return queryset
+            if(self.request.user.profile.account_type=='YM'):
+                return queryset.filter(status__in= ['PACKING','PURCHASED'])
+            else:
+                return queryset
         
 
     def get_context_data(self, **kwargs):
@@ -140,6 +151,40 @@ class OrderDetailView(generic.DetailView):
     model=OrderRegister
     context_object_name='order'
     template_name='order/order_view.html'
+
+    def get_context_data(self, **kwargs):
+        order=self.get_object()
+        context = super().get_context_data(**kwargs)
+        links={}
+
+        if self.request.user.profile.account_type in ['SA','SU']:
+            if order.status=='ORDERED' :
+                links['Approve Quotation '] = reverse('order_approve_quotation',args=[order.pk])
+            if order.status in ['CONFIRMED','PACKING','SHIPPED','RECEIVED','PURCHASED']:
+                links['Add Payment ']=reverse('order_payment_confirm',args=[order.pk])
+        
+        if self.request.user.profile.account_type in ['CA']:
+            if order.status=='APPROVED':
+                links['Confirm Order ']=reverse('order_confirm',args=[order.pk])
+       
+
+
+        if self.request.user.profile.account_type in ['YM']:
+            if order.status=='PACKING':
+                links['Add Delivery Note ']=reverse('add_dn_cn',args=[order.pk,'DN'])
+            if order.status=='PURCHASED':
+                links['Add Collection Note ']=reverse('add_dn_cn',args=[order.pk,'CN'])
+        
+        if self.request.user.profile.account_type in ['PM']:
+            if order.status=='SHIPPED':
+                links['Add Collection Note ']=reverse('add_dn_cn',args=[order.pk,'CN'])
+        
+
+        
+        context['links']=links
+        print(context['links'])
+        return context
+
 
 
   
@@ -204,7 +249,6 @@ def confirmPaymentView(request,pk):
                 return redirect('order_payment_confirm',pk=order.pk)
             order.payment_received+=form.cleaned_data['payment_received']
             #order.payment_due=order.payment_total-order.payment_received
-
 
             message_added=False
             if order.payment_received>=order.payment_advance and order.payment_received<order.payment_total and (order.status !='PACKING' and order.status !='PURCHASED'):

@@ -1,0 +1,72 @@
+{% extends 'detail_layout.html'%}
+
+{% block title%}
+<title>Company Detail</title>
+{% endblock%}
+
+    {%block left-title%}Company Detail{%endblock%}
+    {% block left%}
+<table>
+    <tr>
+        <td>Company Name</td>
+        <td>{{company.name}}</td>
+    </tr>
+    <tr>
+        <td>Country</td>
+        <td>{{company.country}}</td>
+    </tr>
+
+    <tr>
+        <td>Province</td>
+        <td>{{company.province}}</td>
+    </tr>
+    <tr>
+        <td>City</td>
+        <td>{{company.city}}</td>
+    </tr>
+    <tr>
+        <td>Street</td>
+        <td>{{company.street}}</td>
+    </tr>
+
+    <tr>
+        <td>Type</td>
+        <td>{{company.type}}</td>
+    </tr>
+    <tr>
+        <td>Total Transaction Value</td>
+        <td>${{company.payment_total}}</td>
+    </tr>
+    <tr>
+        <td>Payment Received</td>
+        <td>${{company.payment_received}}</td>
+    </tr>
+    <tr>
+        <td>Due Payent</td>
+        <td>${{company.payment_due}}</td>
+    </tr>
+    <tr>
+        <td>Contact Number</td>
+        <td>{{company.contact_number}}</td>
+    </tr>
+    <tr>
+        <td>website</td>
+        <td>{{company.website}}</td>
+    </tr>
+</table>
+<hr />
+{%block form%}
+<a href="{{company.get_update_url}}"><button class="btn btn-warning">Edit</button></a>
+<a href="{{company.get_delete_url}}"><button class="btn btn-danger">Delete</button></a>
+
+{%endblock%}
+
+    {%endblock%}
+
+
+    {%block right-title%}{%endblock%}
+    {%block right%}
+
+    {%endblock%}
+
+

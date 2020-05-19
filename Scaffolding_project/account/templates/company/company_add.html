@@ -1,0 +1,23 @@
+{% extends 'add_layout.html'%}
+{% load crispy_forms_tags %}
+{% block title%}
+<title>Add Company</title>
+{% endblock%}
+
+{%block card-title%}Add Company{%endblock%}
+
+
+{% block card-body%}
+<form method="POST">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="btn btn-primary">{% block action%}Add{%endblock%}</button>
+
+</form>
+
+{%endblock%}
+
+
+
+
+

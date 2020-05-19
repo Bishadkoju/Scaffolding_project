@@ -117,7 +117,7 @@
             </div>
             {{sidebar_url}}
             {{cart_type}}
-            {% include 'sidebar/SA.html' %}
+            {% include sidebar_url %}
         </nav>
             <div id="content">
                 <!-- Navbar  -->
@@ -152,12 +152,13 @@
                                     </a>
                                 </li>
 
-
+                                {% ifequal can_use_cart "True"%}
                                 <li class="nav-item navbar-btn">
                                     <a href="#">
                                         <a href="{% url 'cart_view' cart_type %}"><i class="fas fa-shopping-cart fa-2x"></i></a>
                                     </a>
                                 </li>
+                                {%endifequal%}
 
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">

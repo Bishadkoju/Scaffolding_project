@@ -8,9 +8,6 @@ from django.contrib.auth.views import PasswordChangeForm
 from account.models import Profile,Company
 
 
-
-
-
 # Create your views here.
 def loginPage(request):
     if request.method=='POST':

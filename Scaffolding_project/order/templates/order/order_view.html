@@ -3,7 +3,7 @@
 
 {% block left %}
 <table>
-     <tr>
+    <tr>
         <td>Project</td>
         <td>{{order.project}}</td>
     </tr>
@@ -64,27 +64,24 @@
 <hr />
 <br />
 {%block form%}
-<a href="{% url 'order_approve_quotation' order.id %}">
-    <button class="btn btn-primary">Approve Quotation</button>
-</a>
-<br />
+{%if links.b%}
+dine
+{%endif%}
 
-<a href="{% url 'order_confirm' order.id  %}">
-    <button class="btn btn-primary">Confirm Order</button>
-</a>
+    {%for key,value in links.items%}
+    <a href="{{value}}">
+        <button class="btn btn-primary">{{key}}</button>
+    </a>
+    <br />
 <br />
-<a href="{% url 'order_payment_confirm' order.id  %}">
-    <button class="btn btn-primary">Confirm Payment</button>
-</a>
-<br />
-<a href="{% url 'add_dn_cn' order.id 'DN' %}">
-    <button class="btn btn-primary">Add Delivery note</button>
-</a>
-<br />
-<a href="{% url 'add_dn_cn' order.id 'CN' %}">
-    <button class="btn btn-primary">Add Collection note</button>
-</a>
-<br />
+    {%endfor%}
+
+
+
+
+
+
+
 {%endblock%}
 <hr />
 <br />
@@ -95,13 +92,14 @@
     <th colspan="2">
         <center>
             {% ifequal dncnregister.type 'DN'%}
-                Delivery Note
+            Delivery Note
             {%else%}
-                Collection Note
+            Collection Note
             {%endifequal%}
-        </center></th>
+        </center>
+    </th>
     </thead>
-    
+
     <tr>
         <td>Truck Type</td>
         <td>{{dncnregister.truck_type}}</td>
@@ -127,7 +125,7 @@
 {% endblock %}
 
 {%block right-title%}
- Cart
+ {{order.type }} Cart
 {%endblock%}
 {%block right%}
 <table class="table table-hover" style="text-align:center">
