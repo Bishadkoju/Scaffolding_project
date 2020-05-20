@@ -6,7 +6,7 @@ from PIL import Image
 # Create your models here.
 class ProductRegister(models.Model):
     productName= models.CharField(max_length=100)
-    productMaterialItemCode= models.CharField(max_length=100)
+    productItemCode= models.CharField(max_length=100)
     productBrandNewSellingRate= models.DecimalField(max_digits=10, decimal_places=2)
     productSecondHandSellingRate= models.DecimalField(max_digits=10, decimal_places=2)
     productLossRate=models.DecimalField(max_digits=10, decimal_places=2)
@@ -39,6 +39,7 @@ class ProductRegister(models.Model):
         return self.productName
 
     def save(self):
+        self.productName=self.productName.capitalize()
         super().save()
         img=Image.open(self.image.path)
         if img.height>300 or img.width>300:

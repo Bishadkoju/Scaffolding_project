@@ -7,7 +7,8 @@ class OrderFilter(django_filters.FilterSet):
         ('a','Newest'),
          ('d','Oldest')
         )
-    ordering=django_filters.ChoiceFilter(label='order',choices=CHOICES, method='sorting_method')
+
+    ordering=django_filters.ChoiceFilter(label='Order',choices=CHOICES, method='sorting_method')
 
     def sorting_method(self,queryset,name,value):
         expression= '-timestamp'if value=='a' else 'timestamp'
@@ -15,6 +16,8 @@ class OrderFilter(django_filters.FilterSet):
 
     class Meta:
         model=OrderRegister
-        fields={
+        fields={'status',
+                'type',
+                'project',
            
             }

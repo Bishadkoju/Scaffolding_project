@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class addProductForm(forms.ModelForm):
     productName=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Product Name',}),
                                 required=True,max_length=100)
-    productMaterialItemCode=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Product Material Item Code',}),
+    productItemCode=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Product Material Item Code',}),
                                 required=True,max_length=100)
     productBrandNewSellingRate=forms.FloatField(widget=forms.NumberInput(attrs={'placeholder':'Product Brand-New Selling Rate',}),
                                 required=True)
@@ -40,7 +40,7 @@ class addProductForm(forms.ModelForm):
         model=ProductRegister
         fields=[
                 'productName',
-                'productMaterialItemCode',
+                'productItemCode',
                 'productBrandNewSellingRate',
                 'productSecondHandSellingRate',
                 'productLossRate',

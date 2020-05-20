@@ -70,6 +70,11 @@ def update(request):
                 }
     return render(request,'account/update.html',context)
 
+def viewProfile(request):
+    user=request.user
+    context={'user':user}
+    return render(request,'account/view.html',context)
+
 def change_password(request):
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)

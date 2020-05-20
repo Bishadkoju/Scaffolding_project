@@ -11,6 +11,7 @@ urlpatterns=[
     path('account/',include('account.urls')),
     path('cart/',include('cart.urls')),
     path('order/',include('order.urls')),
+    path('inventory/',inventoryView,name='inventory'),
     path('company/add',CompanyCreateView.as_view(),name='company_add'),
     path('company/<int:pk>/update',CompanyUpdateView.as_view(),name='company_update'),
     path('company/',CompanyListView.as_view(),name='company_list'),

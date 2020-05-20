@@ -129,7 +129,7 @@ class OrderListView(generic.ListView):
             users=User.objects.none()
             for profile in profiles:
                 users |=User.objects.filter(pk=profile.user.pk)
-            print(users)
+            #print(users)
             queryset=queryset.filter(user__in= users)
             if(self.request.user.profile.account_type=='PM'):
                return queryset.filter(status='SHIPPED')
@@ -290,16 +290,14 @@ def addDnCnView(request,pk,type):
 
     context={'order':order,'title':title}
 
-    
+    form=DnCnForm(initial={'truck_rate':order.project.txTruckRates})
     if request.method=='POST':
         form=DnCnForm(request.POST)
         if form.is_valid() :
-            print(order.type)
+            
 
-            if order.type == 'Rent':
-                rent_detail=RentalDetails.objects.get(id=order.rentaldetails.id)
-                rent_detail.ordered_date=request.POST['date']
-                rent_detail.save()
+            
+                
                 
                 #if type == 'DN':       
                 #    rent_detail.ordered_date=request.POST['date']
@@ -328,7 +326,10 @@ def addDnCnView(request,pk,type):
             info.recorded_by=request.user
 
             if order.type!='Sale' and type=='CN':
-                order.status='RECEIVED'
+                order.status='RETURNED'
+                rent_detail=RentalDetails.objects.get(id=order.rentaldetails.id)
+                rent_detail.returned_date=datetime.today()
+                rent_detail.save()
             else :
                 order.status='SHIPPED'
 
@@ -338,8 +339,8 @@ def addDnCnView(request,pk,type):
             order.save()
             messages.success(request,"Note added")
             return redirect('order_detail',pk=order.pk)
-    else:
-        form=DnCnForm()
+    
+        
 
     context['form']=form
     return render(request,'order/add_Dn_Cn.html',context)

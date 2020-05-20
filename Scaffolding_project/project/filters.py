@@ -10,7 +10,7 @@ class ProjectFilter(django_filters.FilterSet):
     ordering=django_filters.ChoiceFilter(label='order',choices=CHOICES, method='sorting_method')
 
     def sorting_method(self,queryset,name,value):
-        expression= '-projectTitle'if value=='a' else 'projectTitle'
+        expression= 'projectTitle'if value=='a' else '-projectTitle'
         return queryset.order_by(expression)
 
     class Meta:

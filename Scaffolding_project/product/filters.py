@@ -17,5 +17,5 @@ class ProductFilter(django_filters.FilterSet):
         model=ProductRegister
         fields={
             'productName':['icontains'],
-            'productMaterialItemCode':['icontains']
+            'productItemCode':['icontains']
             }

@@ -1,5 +1,5 @@
 {%extends 'list_layout.html'%}
-
+{%load crispy_forms_tags%}
 {% block title %}
 	<title>Product List</title>
 {% endblock %}
@@ -8,10 +8,10 @@
 
 	{% block left-title %} FILTER{% endblock%}
 	{% block left%}
-        <form method="GET">
-            {{filter.form.as_p}}
-            <button class='btn btn-primary' type="submit">search</button>
-        </form>
+    <form method="GET">
+        {{filter.form|crispy}}
+        <button class='btn btn-primary' type="submit">search</button>
+    </form>
 
 	{%endblock %}
 
@@ -35,7 +35,7 @@
                         {% for product in filter.qs%}
                         <tr>
                             <td>{{product}}</td>
-                            <td>{{product.productMaterialItemCode}}</td>
+                            <td>{{product.productItemCode}}</td>
                             <td>{{product.productBrandNewSellingRate}}</td>
                             <td>{{product.productDailyRentalRate}}</td>
                             <td>{{product.stock}}</td>

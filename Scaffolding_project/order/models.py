@@ -13,7 +13,7 @@ class OrderRegister(models.Model):
                    ('CONFIRMED','CONFIRMED'),
                    ('PACKING','PACKING'),
                    ('SHIPPED','SHIPPED'),
-                   ('RECEIVED','RECEIVED')
+                   ('RETURNED','RETURNED')
                    ,('CLOSED','CLOSED'),
                    ('PURCHASED','PURCHASED'),)
 
@@ -78,6 +78,9 @@ class RentalDetails(models.Model):
     ordered_date=models.DateField(default=datetime.now)
     expected_duration=models.PositiveIntegerField()
     returned_date=models.DateField(null=True,blank=True)
+
+    def __str__(self):
+        return f'{self.order_register.id},{self.ordered_date}'
 
 
 

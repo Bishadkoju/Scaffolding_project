@@ -41,7 +41,9 @@ class CreateProfileForm(forms.ModelForm):
     
     company=forms.ModelChoiceField(queryset=Company.objects.all(),empty_label="Select Company")
     account_type=forms.ChoiceField(choices=[('','Account Type')]+list(Profile.ACCOUNT_TYPE_CHOICES[1:]))
-    contact_number=forms.CharField(required=False)
+    contact_number=forms.CharField(widget=forms.TextInput(
+        attrs={'class':'form-control','placeholder':'Contact Number'}),
+               required=True,max_length=50)
     
     def clean_account_type(self):
         account_type=self.cleaned_data['account_type']

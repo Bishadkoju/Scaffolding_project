@@ -141,7 +141,7 @@ dine
     <tbody>
         {% for item in order.orderitemsregister_set.all %}
         <tr>
-            <td>{{item.product.productMaterialItemCode}}</td>
+            <td>{{item.product.productItemCode}}</td>
             <td>{{item.product.productName}}</td>
             <td>{{item.product_price}}</td>
             <td>{{item.quantity}}</td>

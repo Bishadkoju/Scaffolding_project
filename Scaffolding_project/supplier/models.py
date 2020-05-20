@@ -26,6 +26,9 @@ class SupplierRegister(models.Model):
         return reverse('supplier_detail',args=[self.id])
     def get_delete_url(self):
         return reverse('supplier_delete',args=[self.id])
+    def save(self):
+        self.supplierName=self.supplierName.capitalize()
+        super().save()
 
     class Meta:
         ordering=['supplierName']

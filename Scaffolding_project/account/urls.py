@@ -7,6 +7,7 @@ urlpatterns=[
     path('logout',views.logout,name='logout'),
     path('register',views.register,name='register'),
     path('update',views.update,name='update'),
+    path('view',views.viewProfile,name='view'),
     path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
     path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),

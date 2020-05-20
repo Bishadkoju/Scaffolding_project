@@ -5,9 +5,7 @@
 <form method="POST">
     {% csrf_token %}
     
-    {% ifequal order.type 'Rent' %}
-        <input type="date" name="date" placeholder=" Date"/>
-    {%endifequal%}
+   
 
     <div class="row my-row">
         <div class="col ">

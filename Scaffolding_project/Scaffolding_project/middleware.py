@@ -15,7 +15,7 @@ from django.http import HttpResponseForbidden
 #          'add_dn_cn','confirm_purchase','order_list','order_detail',
 #          'register','update','password_change','logout'
 #          ]
-SU_VIEWS=['dashboard',
+SU_VIEWS=['dashboard','inventory',
           'product_add','product_list','product_update','product_detail','product_delete',
           'supplier_add','supplier_list','supplier_update','supplier_detail','supplier_delete',
           'project_add','project_list','project_update','project_detail','project_delete',
@@ -23,37 +23,38 @@ SU_VIEWS=['dashboard',
           'cart_view',
           'order_approve_quotation','order_payment_confirm',
           'confirm_purchase','order_list','order_detail',
-          'register','update','password_change','logout'
+          'register','update','password_change','logout','view',
+
           ]
 
-CA_VIEWS=['dashboard',
-          'product_detail','product_list',
+CA_VIEWS=['dashboard','inventory',
+          'product_detail',
           'project_list','project_detail',
           'company_detail',
           'cart_view',
           'order_confirm_quotation','order_confirm',
           'order_list','order_detail',
-          'register','update','password_change','logout'
+          'update','password_change','logout','view',
           ]
 
-CU_VIEWS=['dashboard',
-          'product_detail','product_list',
+CU_VIEWS=['dashboard','inventory',
+          'product_detail',
           'project_list','project_detail',
           'company_detail',
           'order_list','order_detail',
-          'register','update','password_change','logout'
+          'update','password_change','logout','view',
           ]
 
-YM_VIEWS=['dashboard',
-          'product_list',
+YM_VIEWS=['dashboard','inventory',
+          
           'add_dn_cn','order_list','order_detail',
-          'register','update','password_change','logout'
+          'update','password_change','logout','view',
           ]
 
-PM_VIEWS=['dashboard',
+PM_VIEWS=['dashboard','inventory',
           'project_list','project_detail',
           'add_dn_cn','order_list','order_detail',
-          'register','update','password_change','logout'
+          'update','password_change','logout','view',
           ]
 
 
@@ -97,12 +98,16 @@ class AccessControlMiddleware:
         assert hasattr(request,'user')
         path=request.path_info
         view=resolve(path).url_name
-        
+        temp=path.lstrip('/')
+        temp=temp.split('/')
+        print(temp[0])
         if request.user.is_authenticated :
             account_type=request.user.profile.account_type
             if view==None: # Static image retrieval view
                 return None
-         
+            if account_type=='SA' and temp[0]=='admin':
+                return None
+
             if account_type =='SA' and view in SU_VIEWS:
                 return None
             elif account_type =='SU' and view in SU_VIEWS:
@@ -119,7 +124,7 @@ class AccessControlMiddleware:
                 return HttpResponseForbidden("Access Denied")
 
         
-        print(view)
+      
         
     
 

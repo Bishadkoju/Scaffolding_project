@@ -75,7 +75,7 @@
                             {% with product=item.product %}
                             <tr>
                                 <td><a href="?action=remove&id={{product.id}}"><i class="fas fa-trash"></i></a></td>
-                                <td>{{product.productMaterialItemCode}}</td>
+                                <td>{{product.productItemCode}}</td>
                                 <td>{{product.productName}}</td>
                                 <td>{{item.price}}</td>
                                 <td><input class="form-control" style="width:80px;" type="number" min="1" value="{{item.quantity}}" name="{{product.id}}"</td>

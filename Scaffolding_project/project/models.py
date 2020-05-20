@@ -27,6 +27,9 @@ class ProjectRegister(models.Model):
 
     def __str__(self):
         return self.projectTitle
+    def save(self):
+        self.projectTitle=self.projectTitle.capitalize()
+        super().save()
     def get_absolute_url(self):
         return reverse('project_detail',args=[self.id])
     def get_update_url(self):
@@ -34,5 +37,5 @@ class ProjectRegister(models.Model):
     def get_delete_url(self):
         return reverse('project_delete',args=[self.id])
     class Meta:
-        ordering=['-projectTitle',]
+        ordering=['projectTitle',]
 

@@ -64,12 +64,14 @@
                     </table>
                 </p>
                 {%block form%}
-                <a href="{{project.get_update_url}}">
-                    <button class="btn btn-warning border rounded" type="button" style="margin: 5px;">Edit</button>
-                </a>
-                <a href="{{project.get_delete_url}}">
-                    <button class="btn btn-danger border rounded" type="button" style="margin: 5px;">Delete</button>
-                </a>
+                {% ifequal system_access 'True'%}
+                    <a href="{{project.get_update_url}}">
+                        <button class="btn btn-warning border rounded" type="button" style="margin: 5px;">Edit</button>
+                    </a>
+                    <a href="{{project.get_delete_url}}">
+                        <button class="btn btn-danger border rounded" type="button" style="margin: 5px;">Delete</button>
+                    </a>
+                {%endifequal%}
                 {%endblock%}
               
                 

@@ -72,7 +72,7 @@
                     .siblings('input')
                     .first()
                     .attr('placeholder');
-                console.log(ph);
+               
                 $(labels[i]).html(ph);
             });
         }
@@ -97,8 +97,15 @@
             $("form").on("reset", function () {
                 console.log('reset');
                 $('.floating-placeholder input').each(function (i) {
-                    $(this).parent().removeClass('float');
+                    $(this).parent().addClass('float');
                 });
+                $('.floating-placeholder input').each(function (i) {
+                    var input = $(this).val();
+                    if (input) $(this).parent().addClass('float');
+                    else $(this).parent().removeClass('float');
+                });
+
+
             });
             initTricks();
         })
@@ -137,39 +144,45 @@
 
 
                                 </li>
+                                <a class="nav-link" href="{% url 'view' %}" title="Profile">
+                                    <li class="nav-item">
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
                                         {{user.username}}
-                                    </a>
-                                </li>
 
-                                <li class="nav-item navbar-btn">
-                                    <a href="#">
+                                    </li>
+                                </a>
+
+                                <a href="{% url 'view' %}" title="Profile">
+                                    <li class="nav-item navbar-btn">
+
 
                                         <img class="rounded-circle" style="width:32px;height:32px;" src=" {{user.profile.profile_picture.url}}">
 
-                                    </a>
-                                </li>
+
+                                    </li>
+                                </a>
 
                                 {% ifequal can_use_cart "True"%}
-                                <li class="nav-item navbar-btn">
-                                    <a href="#">
-                                        <a href="{% url 'cart_view' cart_type %}"><i class="fas fa-shopping-cart fa-2x"></i></a>
-                                    </a>
-                                </li>
-                                {%endifequal%}
+                                <a href="{% url 'cart_view' cart_type %}" title="Cart">
+                                    <li class="nav-item navbar-btn">
 
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Page
-                                    </a>
-                                </li>
-                                <li class="nav-item active navbar-btn">
-                                    <a href="#">
-                                        <i class="fas fa-cog fa-2x"></i>
-                                    </a>
-                                </li>
+                                        <i class="fas fa-shopping-cart fa-2x"></i>
+
+
+                                    </li>
+                                </a>
+                                {%endifequal%}
+                                <a href="{% url 'inventory'  %}" title="Inventory">
+                                    <li class="nav-item navbar-btn">
+
+                                        <i class="fas fa-warehouse fa-2x"></i>
+
+
+                                    </li>
+                                </a>
+
+
+                               
                             </ul>
                         </div>
                     </div>
@@ -209,8 +222,9 @@
 
 
                 <div class="container-fluid">
-
+                    
                     {% block content %}
+
                     {% endblock %}
                 </div>
             </div>

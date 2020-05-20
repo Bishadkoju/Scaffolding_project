@@ -1,5 +1,5 @@
 {%extends 'list_layout.html'%}
-
+{%load crispy_forms_tags%}
 {% block title %}
 <title>Company List</title>
 {% endblock %}
@@ -9,7 +9,7 @@
 {% block left-title %}FILTER{% endblock%}
 {% block left%}
 <form method="GET" style="width:inherit;">
-    {{filter.form.as_p}}
+    {{filter.form|crispy}}
     <button class='btn btn-primary' type="submit">search</button>
 </form>
 {%endblock %}

@@ -7,11 +7,63 @@ from account.models import Company
 from .forms import AddCompanyForm
 from django.urls import reverse_lazy
 from .filters import CompanyFilter
+from product.models import ProductRegister
+from order.models import OrderRegister,OrderItemsRegister
+from project.models import ProjectRegister
+from django.db.models import Q
 # Create your views here.
 
 def dashboard(request):
     
     return render(request,'dashboard.html',{})
+
+def inventoryView(request):
+    context={}
+    total_items=0
+    
+    if request.user.profile.company.type == "self":
+        inventory_self=ProductRegister.objects.all()
+        for a in inventory_self:
+            total_items+=a.stock
+        print(total_items)
+        context['inventory_self']=inventory_self
+        context['total_items']=total_items
+    elif request.user.profile.company.type=='client':
+        inventory_client={}
+        projects=ProjectRegister.objects.filter(company=request.user.profile.company)
+        orders=OrderRegister.objects.filter(Q(project__in = projects)
+                                           & 
+                                            ((Q(status__in=['SHIPPED','CLOSED']) & Q(type='Sale')))
+                                             |
+                                             (Q(status__in=['SHIPPED']) & Q(type='Rent'))
+                                             )
+        #rental_orders=OrderRegister.objects.filter(Q(type='Rent') & Q(status='CLOSED'))
+        #print(rental_orders)
+        
+        #orders.difference(rental_orders)
+        print(orders)
+        for order in orders:
+            orderRegisterItems=OrderItemsRegister.objects.filter(order_register=order)
+
+            for orderRegisterItem in orderRegisterItems:
+                product=orderRegisterItem.product
+                quantity=orderRegisterItem.quantity
+                total_items+=quantity
+                exist=inventory_client.get(product)
+                if exist :
+                    quantity+=exist['quantity']
+                   
+                
+                inventory_client[product]={'product':product,
+                                                       'quantity':quantity}
+                
+
+       
+
+        context['inventory_client']=inventory_client
+        context['total_items']=total_items
+        
+    return render(request,'inventory.html',context)
 
 
 class CompanyCreateView(SuccessMessageMixin,generic.CreateView):
