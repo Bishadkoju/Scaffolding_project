@@ -9,6 +9,12 @@
     <p class="card-text">
                     <table style="border-style:solid; border-width:2px;" align="center">
                         <tr>
+                            <td><b>Company :</b></td>
+                            
+                            <td><a href="{{project.company.get_absolute_url}}" style="color: blue;">{{project.company}} </a></td>
+                           
+                        </tr>
+                        <tr>
                             <td><b>Title:</b></td>
                             <td>{{project.projectTitle}}</td>
                         </tr>
@@ -80,9 +86,45 @@
     {%endblock%}
 
 
-    {%block right-title%}Image{%endblock%}
+    {%block right-title%}Orders{%endblock%}
     {%block right%}
-        Image to be added or any extra contents
+    {% if project.orderregister_set.all %}
+<table class="table table-hover" style="text-align:center">
+    <thead class="thead-dark">
+      
+        <tr>
+            <th rowspan="2">ID</th>
+            <th rowspan="2">Type</th>
+            <th rowspan="2">Status</th>
+            
+            <th colspan="2"> Amount</th>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <th>Paid</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in project.orderregister_set.all|slice:":10" %}
+        <tr>
+            <td><a href="{{order.get_absolute_url}}" style="color: blue;">{{order.id}}</a></td>
+            
+           
+            <td>{{order.type}}</td>
+            <td>{{order.status}}</td>
+            <td>${{order.payment_total}}</td>
+            <td>${{order.payment_received}}</td>
+            
+        </tr>
+    </tbody>
+
+    {% endfor%}
+</table>
+<hr>
+<center><a href="{% url 'project_list'%}"><button class="btn btn-primary">View All </button></a></center>
+       {% else %}
+<H2>No Order found </H2>
+        {% endif %}
     {%endblock%}
 
 

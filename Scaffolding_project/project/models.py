@@ -11,7 +11,7 @@ class ProjectRegister(models.Model):
     projectId=models.IntegerField()
     projectContractNo=models.IntegerField()
     projectSiteLocation=models.CharField(max_length=100)
-    projectMailLocation=models.EmailField(blank=True)
+    projectMailLocation=models.CharField(blank=True,max_length=50)
     orderNumber=models.IntegerField(default=0)
     projectStatus=models.CharField(max_length=100,choices=STATUS_TYPES)
     projectRecordedBy=models.ForeignKey(User,on_delete=models.CASCADE)

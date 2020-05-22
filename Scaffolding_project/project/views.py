@@ -7,7 +7,7 @@ from .forms import addProjectForm
 from .filters import ProjectFilter
 from django.contrib import messages
 from account.models import Company
-
+from django.http import HttpResponseForbidden
 
 # Create your views here.
 
@@ -67,6 +67,17 @@ class ProjectDetailView(generic.DetailView):
     model=ProjectRegister
     context_object_name='project'
     template_name='project/project_detail.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        project = self.get_object()
+        if self.request.user.profile.account_type not in ['SA','SU']:
+            company=self.request.user.profile.company
+            allowedProjects=ProjectRegister.objects.filter(company=company)
+            
+            if project not in allowedProjects:
+                return HttpResponseForbidden('Access Denied')
+        return super(ProjectDetailView, self).dispatch(request, *args, **kwargs)
+        
 
   
 class ProjectDeleteView(SuccessMessageMixin,generic.DeleteView):

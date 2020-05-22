@@ -30,9 +30,7 @@ class addProjectForm(forms.ModelForm):
     remarks=forms.CharField(widget=forms.TextInput(attrs={'placeholder':'Remarks'}),
                                  required=False,max_length=200)
     projectRecordedBy=forms.ModelChoiceField(queryset=User.objects.all(),required=False,widget=forms.HiddenInput())
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
-        print(self.fields['company'].choices)
+   
         
     def _clean_fields(self):
         

@@ -160,7 +160,7 @@ class OrderDetailView(generic.DetailView):
         if self.request.user.profile.account_type in ['SA','SU']:
             if order.status=='ORDERED' :
                 links['Approve Quotation '] = reverse('order_approve_quotation',args=[order.pk])
-            if order.status in ['CONFIRMED','PACKING','SHIPPED','RECEIVED','PURCHASED']:
+            if order.status in ['CONFIRMED','PACKING','SHIPPED','RECEIVED','PURCHASED','RETURNED']:
                 links['Add Payment ']=reverse('order_payment_confirm',args=[order.pk])
         
         if self.request.user.profile.account_type in ['CA']:
@@ -251,7 +251,7 @@ def confirmPaymentView(request,pk):
             #order.payment_due=order.payment_total-order.payment_received
 
             message_added=False
-            if order.payment_received>=order.payment_advance and order.payment_received<order.payment_total and (order.status !='PACKING' and order.status !='PURCHASED'):
+            if order.payment_received>=order.payment_advance and order.payment_received<order.payment_total and (order.status in ['CONFIRMED']):
                 message_added=True
                 order.status='PACKING'
                 messages.success(request,'Adequate amount paid . Order forwarded to yard')

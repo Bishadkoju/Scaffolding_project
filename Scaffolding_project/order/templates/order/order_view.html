@@ -1,11 +1,11 @@
 {%extends 'order/order_layout.html'%}
 {%block title%}<title> View Order</title>{%endblock%}
-
+{% block left-title %} Order Details {%endblock%}
 {% block left %}
 <table>
     <tr>
         <td>Project</td>
-        <td>{{order.project}}</td>
+        <td><a href="{{order.project.get_absolute_url}}" style="color: blue;">{{order.project}} </a></td>
     </tr>
     <tr>
         <td>Order ID</td>

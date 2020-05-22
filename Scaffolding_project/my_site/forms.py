@@ -4,7 +4,6 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 class AddCompanyForm(forms.ModelForm):
-    type
     
     def clean_type(self):
         if self.cleaned_data['type']=='self':

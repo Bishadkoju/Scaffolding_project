@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from account.models import Company
@@ -11,6 +11,7 @@ from product.models import ProductRegister
 from order.models import OrderRegister,OrderItemsRegister
 from project.models import ProjectRegister
 from django.db.models import Q
+from django.shortcuts import get_object_or_404,redirect
 # Create your views here.
 
 def dashboard(request):
@@ -97,6 +98,20 @@ class CompanyDetailView(generic.DetailView):
     context_object_name='company'
     template_name='company/company_detail.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        company = self.get_object()
+        if self.request.user.profile.account_type not in ['SA','SU']:
+             if self.request.user.profile.company !=company:
+                 return HttpResponseForbidden('Access Denied')
+        return super(CompanyDetailView, self).dispatch(request, *args, **kwargs)
+        
+
+   
+
+    
+
+
+
 
 class CompanyDeleteView(SuccessMessageMixin,generic.DeleteView):
     model=Company
@@ -104,6 +119,8 @@ class CompanyDeleteView(SuccessMessageMixin,generic.DeleteView):
     template_name='company/company_delete.html'
     success_message="Company Deleted Successfully"
     success_url=reverse_lazy('company_list')
+    
+   
 
     
 

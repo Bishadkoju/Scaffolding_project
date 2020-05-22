@@ -1,5 +1,6 @@
 import django_filters
 from .models import ProjectRegister
+from account.models import Company
 
 
 class ProjectFilter(django_filters.FilterSet):
@@ -7,6 +8,7 @@ class ProjectFilter(django_filters.FilterSet):
         ('a','A-Z'),
          ('d','Z-A')
         )
+    
     ordering=django_filters.ChoiceFilter(label='order',choices=CHOICES, method='sorting_method')
 
     def sorting_method(self,queryset,name,value):
@@ -17,5 +19,6 @@ class ProjectFilter(django_filters.FilterSet):
         model=ProjectRegister
         fields={
             'projectTitle':['icontains'],
-            'projectSiteLocation':['icontains']
+            'projectSiteLocation':['icontains'],
+
             }

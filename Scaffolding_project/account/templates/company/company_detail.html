@@ -64,9 +64,47 @@
     {%endblock%}
 
 
-    {%block right-title%}{%endblock%}
+    {%block right-title%}Projects{%endblock%}
+    
+   
     {%block right%}
+    {% if company.projectregister_set.all %}
+<table class="table table-hover" style="text-align:center">
+    <thead class="thead-dark">
+      
+        <tr>
+            <th rowspan="2">Title</th>
+            <th rowspan="2">Location</th>
+            <th rowspan="2">Status</th>
+            
+            <th colspan="2"> Amount</th>
+        </tr>
+        <tr>
+            <th>Total</th>
+            <th>Paid</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in company.projectregister_set.all|slice:":5" %}
+        <tr>
+            <td><a href="{{project.get_absolute_url}}" style="color: blue;">{{project}}</a></td>
+            
+           
+            <td>{{project.projectSiteLocation}}</td>
+            <td>{{project.projectStatus}}</td>
+            <td>${{project.payment_total}}</td>
+            <td>${{project.payment_received}}</td>
+            
+        </tr>
+    </tbody>
 
+    {% endfor%}
+</table>
+<hr>
+<center><a href="{% url 'project_list'%}"><button class="btn btn-primary">View All </button></a></center>
+       {% else %}
+<H2>No project found </H2>
+        {% endif %}
     {%endblock%}
 
 
